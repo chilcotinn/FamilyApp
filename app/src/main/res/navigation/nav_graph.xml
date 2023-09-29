@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/todoFragment">
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="com.chilcotin.familyapp.fragments.TodoFragment"
+        android:label="fragment_todo"
+        tools:layout="@layout/fragment_todo" />
+    <fragment
+        android:id="@+id/shareTodoFragment"
+        android:name="com.chilcotin.familyapp.fragments.ShareTodoFragment"
+        android:label="fragment_share_todo"
+        tools:layout="@layout/fragment_share_todo" />
+    <fragment
+        android:id="@+id/shopListFragment"
+        android:name="com.chilcotin.familyapp.fragments.ShopListFragment"
+        android:label="fragment_shop_list"
+        tools:layout="@layout/fragment_shop_list" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.chilcotin.familyapp.fragments.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.chilcotin.familyapp.fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>

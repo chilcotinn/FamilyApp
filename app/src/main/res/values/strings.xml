@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">FamilyApp</string>
+    <!-- Items Navigation Bar -->
     <string name="todo">ToDo</string>
     <string name="todo_share">TodoShare</string>
     <string name="shop_list">ShopList</string>
     <string name="chat">Chat</string>
     <string name="settings">Settings</string>
+    <!-- Other -->
+    <string name="background">Background</string>
 </resources>

@@ -1,8 +1,9 @@
 package com.chilcotin.familyapp
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.chilcotin.familyapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,35 +16,44 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        bottomMenuClick()
+        val navHostFragment =
+            supportFragmentManager
+                .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
+        bottomMenuClick(navController)
     }
 
-    private fun bottomMenuClick() {
+    /*    override fun onNavigateUp(): Boolean {
+            val controller = findNavController(R.id.fragmentContainerView)
+            return super.onNavigateUp() || controller.navigateUp()
+        }*/
+
+    private fun bottomMenuClick(navController: NavController) {
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.todo -> {
-                    Toast.makeText(this, "todo", Toast.LENGTH_SHORT).show()
+                    navController.navigate(R.id.todoFragment)
                     true
                 }
 
                 R.id.todoShare -> {
-                    Toast.makeText(this, "todoShare", Toast.LENGTH_SHORT).show()
+                    navController.navigate(R.id.shareTodoFragment)
                     true
                 }
 
                 R.id.shopList -> {
-                    Toast.makeText(this, "shopList", Toast.LENGTH_SHORT).show()
+                    navController.navigate(R.id.shopListFragment)
                     true
                 }
 
                 R.id.chat -> {
-                    Toast.makeText(this, "chat", Toast.LENGTH_SHORT).show()
+                    navController.navigate(R.id.chatFragment)
                     true
                 }
 
                 R.id.settings -> {
-                    Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show()
+                    navController.navigate(R.id.settingsFragment)
                     true
                 }
 
