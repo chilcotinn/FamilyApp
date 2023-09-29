@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/todo"
+        android:icon="@drawable/ic_todo"
+        android:title="@string/todo"
+        android:orderInCategory="10"
+        />
+    <item
+        android:id="@+id/todoShare"
+        android:icon="@drawable/ic_todo_share"
+        android:title="@string/todo_share"
+        android:orderInCategory="20"
+        />
+    <item
+        android:id="@+id/shopList"
+        android:icon="@drawable/ic_shop"
+        android:title="@string/shop_list"
+        android:orderInCategory="30"
+        />
+    <item
+        android:id="@+id/chat"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/chat"
+        android:orderInCategory="40"
+        />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings"
+        android:orderInCategory="50"
+        />
+</menu>
