@@ -1,16 +1,16 @@
-package com.chilcotin.familyapp.fragments
+package com.chilcotin.familyapp.fragments.shareTodo
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.chilcotin.familyapp.databinding.FragmentChatBinding
+import com.chilcotin.familyapp.databinding.FragmentShareTodoBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChatFragment : Fragment() {
-    private var _binding: FragmentChatBinding? = null
+class ShareTodoFragment : Fragment() {
+    private var _binding: FragmentShareTodoBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,7 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentChatBinding.inflate(inflater, container, false)
+        _binding = FragmentShareTodoBinding.inflate(inflater, container, false)
         return binding.root
     }
 

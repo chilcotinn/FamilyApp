@@ -6,17 +6,17 @@
     app:startDestination="@id/todoFragment">
     <fragment
         android:id="@+id/todoFragment"
-        android:name="com.chilcotin.familyapp.fragments.TodoFragment"
+        android:name="com.chilcotin.familyapp.fragments.todo.TodoFragment"
         android:label="fragment_todo"
         tools:layout="@layout/fragment_todo" />
     <fragment
         android:id="@+id/shareTodoFragment"
-        android:name="com.chilcotin.familyapp.fragments.ShareTodoFragment"
+        android:name="com.chilcotin.familyapp.fragments.shareTodo.ShareTodoFragment"
         android:label="fragment_share_todo"
         tools:layout="@layout/fragment_share_todo" />
     <fragment
         android:id="@+id/shopListFragment"
-        android:name="com.chilcotin.familyapp.fragments.ShopListFragment"
+        android:name="com.chilcotin.familyapp.fragments.shopList.ShopListFragment"
         android:label="fragment_shop_list"
         tools:layout="@layout/fragment_shop_list" />
     <fragment

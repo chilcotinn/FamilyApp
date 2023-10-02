@@ -8,4 +8,5 @@
     <string name="settings">Settings</string>
     <!-- Other -->
     <string name="background">Background</string>
+    <string name="add_new_note">Add new note</string>
 </resources>

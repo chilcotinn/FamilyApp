@@ -24,11 +24,6 @@ class MainActivity : AppCompatActivity() {
         bottomMenuClick(navController)
     }
 
-    /*    override fun onNavigateUp(): Boolean {
-            val controller = findNavController(R.id.fragmentContainerView)
-            return super.onNavigateUp() || controller.navigateUp()
-        }*/
-
     private fun bottomMenuClick(navController: NavController) {
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
