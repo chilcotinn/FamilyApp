@@ -8,7 +8,11 @@
         android:id="@+id/todoFragment"
         android:name="com.chilcotin.familyapp.fragments.todo.TodoFragment"
         android:label="fragment_todo"
-        tools:layout="@layout/fragment_todo" />
+        tools:layout="@layout/fragment_todo" >
+        <action
+            android:id="@+id/action_todoFragment_to_newTodoFragment"
+            app:destination="@id/newTodoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/shareTodoFragment"
         android:name="com.chilcotin.familyapp.fragments.shareTodo.ShareTodoFragment"
@@ -29,4 +33,13 @@
         android:name="com.chilcotin.familyapp.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/newTodoFragment"
+        android:name="com.chilcotin.familyapp.fragments.todo.NewTodoFragment"
+        android:label="NewTodoFragment"
+        tools:layout="@layout/fragment_new_todo">
+        <action
+            android:id="@+id/action_newTodoFragment_to_todoFragment"
+            app:destination="@id/todoFragment" />
+    </fragment>
 </navigation>

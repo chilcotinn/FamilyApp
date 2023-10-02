@@ -2,4 +2,5 @@
 <resources>
     <!-- TextView -->
     <dimen name="text_size">16sp</dimen>
+    <dimen name="edit_text_size">20sp</dimen>
 </resources>

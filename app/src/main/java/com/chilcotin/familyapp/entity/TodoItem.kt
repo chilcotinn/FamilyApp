@@ -11,15 +11,15 @@ data class TodoItem(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
 
-    @NonNull
     @ColumnInfo(name = "title")
     val title: String,
 
-    @NonNull
     @ColumnInfo(name = "description")
     val description: String,
 
-    @NonNull
+    @ColumnInfo(name = "time")
+    val time: String,
+
     @ColumnInfo(name = "isChecked")
     val isChecked: Boolean,
 )
