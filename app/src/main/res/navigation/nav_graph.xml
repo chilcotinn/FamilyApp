@@ -8,10 +8,12 @@
         android:id="@+id/todoFragment"
         android:name="com.chilcotin.familyapp.fragments.todo.TodoFragment"
         android:label="fragment_todo"
-        tools:layout="@layout/fragment_todo" >
+        tools:layout="@layout/fragment_todo">
         <action
             android:id="@+id/action_todoFragment_to_newTodoFragment"
-            app:destination="@id/newTodoFragment" />
+            app:destination="@id/newTodoFragment"
+            app:popUpTo="@id/todoFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/shareTodoFragment"
@@ -40,6 +42,8 @@
         tools:layout="@layout/fragment_new_todo">
         <action
             android:id="@+id/action_newTodoFragment_to_todoFragment"
-            app:destination="@id/todoFragment" />
+            app:destination="@id/todoFragment"
+            app:popUpTo="@id/todoFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
