@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.entity.TodoItem
 
-class TodoAdapter(private val dataSetTodo: List<TodoItem>) :
+class TodoAdapter(private val dataSetTodo: MutableList<TodoItem>) :
     RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
-
-    private var todoListNote = emptyList<TodoItem>()
 
     class TodoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -41,5 +39,5 @@ class TodoAdapter(private val dataSetTodo: List<TodoItem>) :
         holder.checkBox.isChecked = dataSetTodo[position].isChecked
     }
 
-    override fun getItemCount() = todoListNote.size
+    override fun getItemCount() = dataSetTodo.size
 }
