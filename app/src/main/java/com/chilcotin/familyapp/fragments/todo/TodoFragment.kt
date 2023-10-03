@@ -32,24 +32,6 @@ class TodoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        todoList.add(
-            TodoItem(
-                1,
-                "Test",
-                "Description",
-                "18:00 21.09",
-                true
-            )
-        )
-        todoList.add(
-            TodoItem(
-                2,
-                "Test2",
-                "Description 2",
-                "18:00 21.09",
-                false
-            )
-        )
         initRcView()
 
         binding.fbAddTask.setOnClickListener {
