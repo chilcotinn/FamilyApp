@@ -14,6 +14,7 @@ import com.chilcotin.familyapp.MainViewModel
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentTodoBinding
 import com.chilcotin.familyapp.db.TodoAdapter
+import com.chilcotin.familyapp.fragments.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +25,15 @@ class TodoFragment : Fragment() {
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: TodoAdapter
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedViewModel.todoItem.value?.let { mainViewModel.insertTodoItem(it) }
     }
 
     override fun onCreateView(

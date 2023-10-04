@@ -5,13 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentNewTodoBinding
+import com.chilcotin.familyapp.entity.TodoItem
+import com.chilcotin.familyapp.fragments.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NewTodoFragment : Fragment() {
     private var _binding: FragmentNewTodoBinding? = null
     private val binding get() = _binding!!
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,8 +27,26 @@ class NewTodoFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.fbOkTask.setOnClickListener {
+            sharedViewModel.setTodoItem(createNewTodoItem())
+            findNavController().navigate(R.id.action_newTodoFragment_to_todoFragment)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun createNewTodoItem(): TodoItem {
+        return TodoItem(
+            null,
+            binding.edTitle.text.toString(),
+            binding.edDescription.text.toString(),
+            time = "",
+            false
+        )
     }
 }

@@ -3,12 +3,13 @@ package com.chilcotin.familyapp.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "TodoList")
 data class TodoItem(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int?,
 
     @ColumnInfo(name = "title")
     val title: String,
@@ -21,4 +22,4 @@ data class TodoItem(
 
     @ColumnInfo(name = "isChecked")
     val isChecked: Boolean = false,
-)
+) : Serializable
