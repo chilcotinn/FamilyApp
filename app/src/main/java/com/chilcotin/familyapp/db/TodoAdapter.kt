@@ -1,5 +1,6 @@
 package com.chilcotin.familyapp.db
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.entity.TodoItem
 
-class TodoAdapter(private val dataSetTodo: MutableList<TodoItem>) :
+class TodoAdapter() :
     RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
+
+    private var dataSetTodo = emptyList<TodoItem>()
 
     class TodoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -40,4 +43,10 @@ class TodoAdapter(private val dataSetTodo: MutableList<TodoItem>) :
     }
 
     override fun getItemCount() = dataSetTodo.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(list: List<TodoItem>) {
+        dataSetTodo = list
+        notifyDataSetChanged()
+    }
 }

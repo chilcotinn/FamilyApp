@@ -1,11 +1,11 @@
 package com.chilcotin.familyapp
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.chilcotin.familyapp.db.MainDb
 import com.chilcotin.familyapp.entity.TodoItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,4 +24,15 @@ class MainViewModel @Inject constructor(
     }
 
     fun getAllTodoItem(): Flow<List<TodoItem>> = mainDb.dao.getAllTodoItems()
+
+
+    class MainViewModelFactory(private val mainDb: MainDb) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return MainViewModel(mainDb) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModelClass")
+        }
+    }
 }

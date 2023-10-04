@@ -1,6 +1,5 @@
 package com.chilcotin.familyapp.entity
 
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -15,11 +14,11 @@ data class TodoItem(
     val title: String,
 
     @ColumnInfo(name = "description")
-    val description: String,
+    val description: String = "",
 
     @ColumnInfo(name = "time")
-    val time: String,
+    val time: String = "",
 
     @ColumnInfo(name = "isChecked")
-    val isChecked: Boolean,
+    val isChecked: Boolean = false,
 )
