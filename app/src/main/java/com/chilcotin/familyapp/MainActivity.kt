@@ -23,6 +23,10 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         bottomMenuClick(navController)
+        binding.bottomNav.setOnItemReselectedListener {
+            @Suppress("UNUSED_EXPRESSION")
+            false
+        }
     }
 
     private fun bottomMenuClick(navController: NavController) {

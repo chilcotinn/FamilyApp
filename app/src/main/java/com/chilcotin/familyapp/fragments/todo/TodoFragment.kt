@@ -33,7 +33,9 @@ class TodoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedViewModel.todoItem.value?.let { mainViewModel.insertTodoItem(it) }
+        sharedViewModel.todoItem.value?.let {
+            mainViewModel.insertTodoItem(it)
+        }
     }
 
     override fun onCreateView(
