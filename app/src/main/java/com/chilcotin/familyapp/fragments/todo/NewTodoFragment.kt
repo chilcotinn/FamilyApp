@@ -13,11 +13,15 @@ import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentNewTodoBinding
 import com.chilcotin.familyapp.entity.TodoItem
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 @AndroidEntryPoint
 class NewTodoFragment : Fragment() {
     private var _binding: FragmentNewTodoBinding? = null
     private val binding get() = _binding!!
+    private val timeFormatter = SimpleDateFormat("hh:mm - dd/MM", Locale.getDefault())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,10 +35,14 @@ class NewTodoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.fbOkTask.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putSerializable(NEW_TODO, createNewTodoItem())
-            setFragmentResult(NEW_TODO_REQUEST, bundle)
-            findNavController().navigate(R.id.action_newTodoFragment_to_todoFragment)
+            if (binding.edTitle.text.isNotEmpty()) {
+                val bundle = Bundle()
+                bundle.putSerializable(NEW_TODO, createNewTodoItem())
+                setFragmentResult(NEW_TODO_REQUEST, bundle)
+                findNavController().navigate(R.id.action_newTodoFragment_to_todoFragment)
+            } else {
+                binding.edTitle.error = "Empty field"
+            }
         }
     }
 
@@ -48,8 +56,13 @@ class NewTodoFragment : Fragment() {
             null,
             binding.edTitle.text.toString(),
             binding.edDescription.text.toString(),
-            time = "",
+            getTime(),
             false
         )
+    }
+
+    private fun getTime(): String {
+        val c = Calendar.getInstance().time
+        return timeFormatter.format(c.time)
     }
 }
