@@ -6,17 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chilcotin.familyapp.App
+import com.chilcotin.familyapp.Const.NEW_TODO
+import com.chilcotin.familyapp.Const.NEW_TODO_REQUEST
 import com.chilcotin.familyapp.MainViewModel
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentTodoBinding
 import com.chilcotin.familyapp.db.TodoAdapter
-import com.chilcotin.familyapp.fragments.SharedViewModel
+import com.chilcotin.familyapp.entity.TodoItem
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -25,7 +27,6 @@ class TodoFragment : Fragment() {
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: TodoAdapter
-    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
@@ -33,8 +34,9 @@ class TodoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedViewModel.todoItem.value?.let {
-            mainViewModel.insertTodoItem(it)
+        setFragmentResultListener(NEW_TODO_REQUEST) { requestKey, bundle ->
+            val result: TodoItem = bundle.getSerializable(NEW_TODO) as TodoItem
+            mainViewModel.insertTodoItem(result)
         }
     }
 
@@ -49,9 +51,7 @@ class TodoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            initRcView()
-        }
+        initRcView()
 
         binding.fbAddTask.setOnClickListener {
             findNavController().navigate(R.id.action_todoFragment_to_newTodoFragment, null)
@@ -63,7 +63,7 @@ class TodoFragment : Fragment() {
         _binding = null
     }
 
-    private suspend fun initRcView() = with(binding) {
+    private fun initRcView() = with(binding) {
         rcTodoList.layoutManager = LinearLayoutManager(requireContext())
         adapter = TodoAdapter()
         rcTodoList.adapter = adapter
