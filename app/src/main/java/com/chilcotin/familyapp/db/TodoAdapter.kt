@@ -49,4 +49,8 @@ class TodoAdapter() :
         dataSetTodo = list
         notifyDataSetChanged()
     }
+
+    fun getTodoItem(position: Int): TodoItem {
+        return dataSetTodo[position]
+    }
 }

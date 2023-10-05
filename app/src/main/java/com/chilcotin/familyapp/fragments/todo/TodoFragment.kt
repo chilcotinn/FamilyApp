@@ -9,7 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.Const.NEW_TODO
 import com.chilcotin.familyapp.Const.NEW_TODO_REQUEST
@@ -52,6 +54,27 @@ class TodoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRcView()
+
+        val itemTouchHelperCallback = ItemTouchHelper(
+            object :
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val position = viewHolder.adapterPosition
+                    val todoItem = adapter.getTodoItem(position)
+                    mainViewModel.deleteTodoItem(todoItem)
+                }
+            })
+
+        itemTouchHelperCallback.attachToRecyclerView(binding.rcTodoList)
 
         binding.fbAddTask.setOnClickListener {
             findNavController().navigate(R.id.action_todoFragment_to_newTodoFragment, null)
