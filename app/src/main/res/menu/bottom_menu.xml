@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/todo"
+        android:id="@+id/todoFragment"
         android:icon="@drawable/ic_todo"
         android:title="@string/todo"
         android:orderInCategory="10"
         />
     <item
-        android:id="@+id/todoShare"
+        android:id="@+id/shareTodoFragment"
         android:icon="@drawable/ic_todo_share"
         android:title="@string/todo_share"
         android:orderInCategory="20"
         />
     <item
-        android:id="@+id/shopList"
+        android:id="@+id/shopListFragment"
         android:icon="@drawable/ic_shop"
         android:title="@string/shop_list"
         android:orderInCategory="30"
         />
     <item
-        android:id="@+id/chat"
+        android:id="@+id/chatFragment"
         android:icon="@drawable/ic_chat"
         android:title="@string/chat"
         android:orderInCategory="40"
         />
     <item
-        android:id="@+id/settings"
+        android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:title="@string/settings"
         android:orderInCategory="50"
