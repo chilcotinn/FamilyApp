@@ -15,11 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.Const.NEW_TODO
 import com.chilcotin.familyapp.Const.NEW_TODO_REQUEST
-import com.chilcotin.familyapp.viewModel.MainViewModel
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentTodoBinding
 import com.chilcotin.familyapp.db.TodoAdapter
 import com.chilcotin.familyapp.entity.TodoItem
+import com.chilcotin.familyapp.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,6 +36,7 @@ class TodoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setFragmentResultListener(NEW_TODO_REQUEST) { _, bundle ->
             val result: TodoItem = bundle.getSerializable(NEW_TODO) as TodoItem
             mainViewModel.insertTodoItem(result)
@@ -55,25 +56,7 @@ class TodoFragment : Fragment() {
 
         initRcView()
 
-        val itemTouchHelperCallback = ItemTouchHelper(
-            object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val position = viewHolder.adapterPosition
-                    val todoItem = adapter.getTodoItem(position)
-                    mainViewModel.deleteTodoItem(todoItem)
-                }
-            })
-
+        val itemTouchHelperCallback = createItemTouchHelper()
         itemTouchHelperCallback.attachToRecyclerView(binding.rcTodoList)
 
         binding.fbAddTask.setOnClickListener {
@@ -95,5 +78,26 @@ class TodoFragment : Fragment() {
                 adapter.setList(it)
             }
         }
+    }
+
+    private fun createItemTouchHelper(): ItemTouchHelper {
+        return ItemTouchHelper(
+            object :
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val position = viewHolder.adapterPosition
+                    val todoItem = adapter.getTodoItem(position)
+                    mainViewModel.deleteTodoItem(todoItem)
+                }
+            })
     }
 }
