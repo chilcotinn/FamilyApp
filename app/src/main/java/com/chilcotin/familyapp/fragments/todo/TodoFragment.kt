@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.Const.NEW_TODO
 import com.chilcotin.familyapp.Const.NEW_TODO_REQUEST
-import com.chilcotin.familyapp.MainViewModel
+import com.chilcotin.familyapp.viewModel.MainViewModel
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentTodoBinding
 import com.chilcotin.familyapp.db.TodoAdapter
@@ -36,7 +36,7 @@ class TodoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setFragmentResultListener(NEW_TODO_REQUEST) { requestKey, bundle ->
+        setFragmentResultListener(NEW_TODO_REQUEST) { _, bundle ->
             val result: TodoItem = bundle.getSerializable(NEW_TODO) as TodoItem
             mainViewModel.insertTodoItem(result)
         }

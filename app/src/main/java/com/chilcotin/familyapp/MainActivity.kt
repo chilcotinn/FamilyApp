@@ -24,10 +24,5 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         NavigationUI.setupWithNavController(binding.bottomNav, navController)
-
-        binding.bottomNav.setOnItemReselectedListener {
-            @Suppress("UNUSED_EXPRESSION")
-            false
-        }
     }
 }

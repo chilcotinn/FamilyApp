@@ -1,4 +1,4 @@
-package com.chilcotin.familyapp
+package com.chilcotin.familyapp.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
@@ -34,6 +35,11 @@ class NewTodoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            edTitle.requestFocus()
+            showSoftKeyboard(edTitle)
+        }
+
         binding.fbOkTask.setOnClickListener {
             if (binding.edTitle.text.isNotEmpty()) {
                 val bundle = Bundle()
@@ -41,7 +47,7 @@ class NewTodoFragment : Fragment() {
                 setFragmentResult(NEW_TODO_REQUEST, bundle)
                 findNavController().navigate(R.id.action_newTodoFragment_to_todoFragment)
             } else {
-                binding.edTitle.error = "Empty field"
+                binding.edTitle.error = context?.getString(R.string.empty_filed)
             }
         }
     }
@@ -64,5 +70,12 @@ class NewTodoFragment : Fragment() {
     private fun getTime(): String {
         val c = Calendar.getInstance().time
         return timeFormatter.format(c.time)
+    }
+
+    private fun showSoftKeyboard(view: View) {
+        if (view.requestFocus()) {
+            val imm = context?.getSystemService(InputMethodManager::class.java)
+            imm?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
 }
