@@ -1,56 +1,55 @@
 package com.chilcotin.familyapp.db
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.chilcotin.familyapp.R
+import com.chilcotin.familyapp.databinding.TodoItemBinding
 import com.chilcotin.familyapp.entity.TodoItem
 
 class TodoAdapter() :
-    RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
-
-    private var dataSetTodo = emptyList<TodoItem>()
-
-    class TodoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        val title: TextView
-        val description: TextView
-        val time: TextView
-        val checkBox: CheckBox
-
-        init {
-            title = view.findViewById(R.id.tvTitle)
-            description = view.findViewById(R.id.tvDescription)
-            time = view.findViewById(R.id.tvTime)
-            checkBox = view.findViewById(R.id.checkBox)
-        }
-    }
+    ListAdapter<TodoItem, TodoAdapter.TodoViewHolder>(ItemComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.todo_item, parent, false)
-        return TodoViewHolder(view)
+        return TodoViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.title.text = dataSetTodo[position].title
-        holder.description.text = dataSetTodo[position].description
-        holder.time.text = dataSetTodo[position].time
-        holder.checkBox.isChecked = dataSetTodo[position].isChecked
+        holder.setData(getItem(position))
     }
 
-    override fun getItemCount() = dataSetTodo.size
+    class TodoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = TodoItemBinding.bind(view)
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<TodoItem>) {
-        dataSetTodo = list
-        notifyDataSetChanged()
+        fun setData(todoItem: TodoItem) =
+            with(binding) {
+                tvTitle.text = todoItem.title
+                tvDescription.text = todoItem.description
+                tvTime.text = todoItem.time
+                checkBox.isChecked = todoItem.isChecked
+            }
+
+        companion object {
+            fun create(parent: ViewGroup): TodoViewHolder {
+                return TodoViewHolder(
+                    LayoutInflater
+                        .from(parent.context)
+                        .inflate(R.layout.todo_item, parent, false)
+                )
+            }
+        }
     }
 
-    fun getTodoItem(position: Int): TodoItem {
-        return dataSetTodo[position]
+    class ItemComparator() : DiffUtil.ItemCallback<TodoItem>() {
+        override fun areItemsTheSame(oldItem: TodoItem, newItem: TodoItem): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: TodoItem, newItem: TodoItem): Boolean {
+            return oldItem == newItem
+        }
     }
 }
