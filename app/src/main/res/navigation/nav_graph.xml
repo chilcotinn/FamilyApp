@@ -13,7 +13,8 @@
             android:id="@+id/action_todoFragment_to_newTodoFragment"
             app:destination="@id/newTodoFragment"
             app:launchSingleTop="false"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/newTodoFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/shareTodoFragment"
@@ -43,7 +44,7 @@
         <action
             android:id="@+id/action_newTodoFragment_to_todoFragment"
             app:destination="@id/todoFragment"
-            app:launchSingleTop="true"
+            app:launchSingleTop="false"
             app:popUpToInclusive="false" />
     </fragment>
 </navigation>

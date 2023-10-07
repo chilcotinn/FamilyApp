@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 class TodoFragment : Fragment() {
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: TodoAdapter
+    val adapter by lazy { TodoAdapter() }
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
@@ -60,7 +60,7 @@ class TodoFragment : Fragment() {
         itemTouchHelperCallback.attachToRecyclerView(binding.rcTodoList)
 
         binding.fbAddTask.setOnClickListener {
-            findNavController().navigate(R.id.action_todoFragment_to_newTodoFragment, null)
+            findNavController().navigate(R.id.action_todoFragment_to_newTodoFragment)
         }
     }
 
@@ -71,7 +71,6 @@ class TodoFragment : Fragment() {
 
     private fun initRcView() = with(binding) {
         rcTodoList.layoutManager = LinearLayoutManager(requireContext())
-        adapter = TodoAdapter()
         rcTodoList.adapter = adapter
     }
 
