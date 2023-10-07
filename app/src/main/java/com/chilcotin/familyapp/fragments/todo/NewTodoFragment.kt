@@ -8,21 +8,18 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
-import com.chilcotin.familyapp.Const.NEW_TODO
-import com.chilcotin.familyapp.Const.NEW_TODO_REQUEST
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentNewTodoBinding
 import com.chilcotin.familyapp.entity.TodoItem
+import com.chilcotin.familyapp.utils.Const.NEW_TODO
+import com.chilcotin.familyapp.utils.Const.NEW_TODO_REQUEST
+import com.chilcotin.familyapp.utils.TimeManager.getTime
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 @AndroidEntryPoint
 class NewTodoFragment : Fragment() {
     private var _binding: FragmentNewTodoBinding? = null
     private val binding get() = _binding!!
-    private val timeFormatter = SimpleDateFormat("hh:mm - dd/MM", Locale.getDefault())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,11 +62,6 @@ class NewTodoFragment : Fragment() {
             getTime(),
             false
         )
-    }
-
-    private fun getTime(): String {
-        val c = Calendar.getInstance().time
-        return timeFormatter.format(c.time)
     }
 
     private fun showSoftKeyboard(view: View) {

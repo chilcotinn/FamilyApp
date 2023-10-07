@@ -9,14 +9,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chilcotin.familyapp.App
-import com.chilcotin.familyapp.Const.NEW_TODO
-import com.chilcotin.familyapp.Const.NEW_TODO_REQUEST
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentTodoBinding
 import com.chilcotin.familyapp.db.TodoAdapter
 import com.chilcotin.familyapp.entity.TodoItem
+import com.chilcotin.familyapp.utils.Const.NEW_TODO
+import com.chilcotin.familyapp.utils.Const.NEW_TODO_REQUEST
 import com.chilcotin.familyapp.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -52,9 +54,10 @@ class TodoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRcView()
+        observer()
 
-//        val itemTouchHelperCallback = createItemTouchHelper()
-//        itemTouchHelperCallback.attachToRecyclerView(binding.rcTodoList)
+        val itemTouchHelperCallback = createItemTouchHelper()
+        itemTouchHelperCallback.attachToRecyclerView(binding.rcTodoList)
 
         binding.fbAddTask.setOnClickListener {
             findNavController().navigate(R.id.action_todoFragment_to_newTodoFragment, null)
@@ -70,6 +73,9 @@ class TodoFragment : Fragment() {
         rcTodoList.layoutManager = LinearLayoutManager(requireContext())
         adapter = TodoAdapter()
         rcTodoList.adapter = adapter
+    }
+
+    private fun observer() {
         lifecycle.coroutineScope.launch {
             mainViewModel.getAllTodoItem().collect {
                 adapter.submitList(it)
@@ -77,24 +83,24 @@ class TodoFragment : Fragment() {
         }
     }
 
-    /*    private fun createItemTouchHelper(): ItemTouchHelper {
-            return ItemTouchHelper(
-                object :
-                    ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+    private fun createItemTouchHelper(): ItemTouchHelper {
+        return ItemTouchHelper(
+            object :
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
-                    override fun onMove(
-                        recyclerView: RecyclerView,
-                        viewHolder: RecyclerView.ViewHolder,
-                        target: RecyclerView.ViewHolder
-                    ): Boolean {
-                        return false
-                    }
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
 
-                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                        val position = viewHolder.adapterPosition
-                        val todoItem = adapter.getTodoItem(position)
-                        mainViewModel.deleteTodoItem(todoItem)
-                    }
-                })
-        }*/
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val position = viewHolder.adapterPosition
+                    val item = adapter.currentList[position]
+                    mainViewModel.deleteTodoItem(item)
+                }
+            })
+    }
 }

@@ -1,4 +1,4 @@
-package com.chilcotin.familyapp
+package com.chilcotin.familyapp.utils
 
 object Const {
     const val NEW_TODO = "new_todo"
