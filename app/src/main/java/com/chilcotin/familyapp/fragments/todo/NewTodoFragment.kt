@@ -40,7 +40,7 @@ class NewTodoFragment : Fragment() {
         binding.fbOkTask.setOnClickListener {
             if (binding.edTitle.text.isNotEmpty()) {
                 val bundle = Bundle()
-                bundle.putSerializable(NEW_TODO, createNewTodoItem())
+                bundle.putParcelable(NEW_TODO, createNewTodoItem())
                 setFragmentResult(NEW_TODO_REQUEST, bundle)
                 findNavController().navigate(R.id.action_newTodoFragment_to_todoFragment)
             } else {

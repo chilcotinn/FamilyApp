@@ -37,7 +37,7 @@ class TodoFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         setFragmentResultListener(NEW_TODO_REQUEST) { _, bundle ->
-            val result: TodoItem = bundle.getSerializable(NEW_TODO) as TodoItem
+            val result: TodoItem = bundle.getParcelable(NEW_TODO) ?: TodoItem("Error")
             mainViewModel.insertTodoItem(result)
         }
     }

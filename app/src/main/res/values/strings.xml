@@ -6,14 +6,11 @@
     <string name="shop_list">ShopList</string>
     <string name="chat">Chat</string>
     <string name="settings">Settings</string>
-    <!-- TodoItem -->
-    <string name="swipe_delete">Swipe left or right for delete task.</string>
-    <string name="delete_cancel">Deletion can be canceled within 5 seconds</string>
-    <string name="new_todo">Click + for add new task</string>
     <!-- Other -->
     <string name="background" translatable="false">Background</string>
     <string name="add_new_note" translatable="false">Add new note</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="empty_filed">Empty field</string>
+    <string name="error_todo">Error Todo task</string>
 </resources>
