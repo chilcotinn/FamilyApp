@@ -56,11 +56,10 @@ class NewTodoFragment : Fragment() {
 
     private fun createNewTodoItem(): TodoItem {
         return TodoItem(
-            null,
             binding.edTitle.text.toString(),
             binding.edDescription.text.toString(),
             getTime(),
-            false
+            false,
         )
     }
 

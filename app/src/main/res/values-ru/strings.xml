@@ -6,7 +6,10 @@
     <string name="shop_list">ShopList</string>
     <string name="chat">Chat</string>
     <string name="settings">Settings</string>
+    <string name="swipe_delete">Проведите пальцем влево или вправо, чтобы удалить задачу.</string>
+    <string name="delete_cancel">Удаление можно отменить в течение 5 секунд.</string>
     <string name="title">Заголовок</string>
     <string name="description">Описание</string>
     <string name="empty_filed">Пустое поле</string>
+    <string name="new_todo">Нажмите +, чтобы добавить новую задачу.</string>
 </resources>

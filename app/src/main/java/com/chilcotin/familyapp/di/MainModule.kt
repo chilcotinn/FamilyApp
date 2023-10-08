@@ -20,6 +20,12 @@ object MainModule {
             app,
             MainDb::class.java,
             "main.db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideDao(db: MainDb) = db.getDao()
 }

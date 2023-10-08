@@ -10,5 +10,6 @@ import com.chilcotin.familyapp.entity.TodoItem
     exportSchema = true,
 )
 abstract class MainDb : RoomDatabase() {
-    abstract val dao: Dao
+
+    abstract fun getDao(): Dao
 }

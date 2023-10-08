@@ -5,11 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "TodoList")
+@Entity(tableName = "todo_list")
 data class TodoItem(
-
-    @PrimaryKey(autoGenerate = true)
-    val id: Int?,
 
     @ColumnInfo(name = "title")
     val title: String,
@@ -22,4 +19,7 @@ data class TodoItem(
 
     @ColumnInfo(name = "isChecked")
     val isChecked: Boolean = false,
+
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
 ) : Serializable

@@ -16,14 +16,18 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun insertTodoItem(item: TodoItem) = viewModelScope.launch {
-        mainDb.dao.insertTodoItem(item)
+        mainDb.getDao().insertTodoItem(item)
+    }
+
+    fun updateTodoItem(item: TodoItem) = viewModelScope.launch {
+        mainDb.getDao().updateTodoItem(item)
     }
 
     fun deleteTodoItem(item: TodoItem) = viewModelScope.launch {
-        mainDb.dao.deleteTodoItem(item)
+        mainDb.getDao().deleteTodoItem(item)
     }
 
-    fun getAllTodoItem(): Flow<List<TodoItem>> = mainDb.dao.getAllTodoItems()
+    fun getAllTodoItem(): Flow<List<TodoItem>> = mainDb.getDao().getAllTodoItems()
 
 
     class MainViewModelFactory(private val mainDb: MainDb) : ViewModelProvider.Factory {
