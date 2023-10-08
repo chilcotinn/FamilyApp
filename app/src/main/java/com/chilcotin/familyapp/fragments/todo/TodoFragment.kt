@@ -1,5 +1,6 @@
 package com.chilcotin.familyapp.fragments.todo
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +38,12 @@ class TodoFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         setFragmentResultListener(NEW_TODO_REQUEST) { _, bundle ->
-            val result: TodoItem = bundle.getParcelable(NEW_TODO) ?: TodoItem("Error")
+            val result: TodoItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                bundle.getParcelable(NEW_TODO, TodoItem::class.java) ?: TodoItem("Error")
+            } else {
+                @Suppress("DEPRECATION")
+                bundle.getParcelable(NEW_TODO) ?: TodoItem("Error")
+            }
             mainViewModel.insertTodoItem(result)
         }
     }
@@ -72,11 +78,12 @@ class TodoFragment : Fragment() {
     private fun initRcView() = with(binding) {
         rcTodoList.layoutManager = LinearLayoutManager(requireContext())
         rcTodoList.adapter = adapter
+        rcTodoList.setHasFixedSize(true)
     }
 
     private fun observer() {
         lifecycle.coroutineScope.launch {
-            mainViewModel.getAllTodoItem().collect {
+            mainViewModel.getAllTodoItem().observe(viewLifecycleOwner) {
                 adapter.submitList(it)
             }
         }

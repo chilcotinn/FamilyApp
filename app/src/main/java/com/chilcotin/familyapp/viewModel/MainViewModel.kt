@@ -1,12 +1,13 @@
 package com.chilcotin.familyapp.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chilcotin.familyapp.db.MainDb
 import com.chilcotin.familyapp.entity.TodoItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class MainViewModel @Inject constructor(
         mainDb.getDao().deleteTodoItem(item)
     }
 
-    fun getAllTodoItem(): Flow<List<TodoItem>> = mainDb.getDao().getAllTodoItems()
+    fun getAllTodoItem(): LiveData<List<TodoItem>> = mainDb.getDao().getAllTodoItems().asLiveData()
 
 
     class MainViewModelFactory(private val mainDb: MainDb) : ViewModelProvider.Factory {

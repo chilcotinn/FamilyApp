@@ -14,6 +14,7 @@ android {
     defaultConfig {
         applicationId = "com.chilcotin.familyapp"
         minSdk = 23
+        //noinspection OldTargetApi
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -55,6 +56,8 @@ dependencies {
 
     implementation("androidx.room:room-ktx:2.5.2")
     ksp("androidx.room:room-compiler:2.5.2")
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

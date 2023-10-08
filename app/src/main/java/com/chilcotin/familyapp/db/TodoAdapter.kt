@@ -11,37 +11,34 @@ import com.chilcotin.familyapp.entity.TodoItem
 class TodoAdapter() :
     ListAdapter<TodoItem, TodoAdapter.TodoViewHolder>(ItemComparator()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-        return TodoViewHolder(
-            TodoItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-    }
-
-    override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.setData(getItem(position))
-    }
-
     class TodoViewHolder(private var binding: TodoItemBinding) : ViewHolder(binding.root) {
 
         fun setData(todoItem: TodoItem) {
-            binding.tvTitle.text = todoItem.title
-            binding.tvDescription.text = todoItem.description
-            binding.tvTime.text = todoItem.time
-            binding.checkBox.isChecked = todoItem.isChecked
+            binding.apply {
+                tvTitle.text = todoItem.title
+                tvTitle.paint.isStrikeThruText = todoItem.isChecked
+                tvDescription.text = todoItem.description
+                tvTime.text = todoItem.time
+                checkBox.isChecked = todoItem.isChecked
+            }
         }
     }
 
-    class ItemComparator() : DiffUtil.ItemCallback<TodoItem>() {
-        override fun areItemsTheSame(oldItem: TodoItem, newItem: TodoItem): Boolean {
-            return oldItem.id == newItem.id
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
+        val binding = TodoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return TodoViewHolder(binding)
+    }
 
-        override fun areContentsTheSame(oldItem: TodoItem, newItem: TodoItem): Boolean {
-            return oldItem == newItem
-        }
+    override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
+        val currentItem = getItem(position)
+        holder.setData(currentItem)
+    }
+
+    class ItemComparator : DiffUtil.ItemCallback<TodoItem>() {
+        override fun areItemsTheSame(oldItem: TodoItem, newItem: TodoItem): Boolean =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: TodoItem, newItem: TodoItem): Boolean =
+            oldItem == newItem
     }
 }
