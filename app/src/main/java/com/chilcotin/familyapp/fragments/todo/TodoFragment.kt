@@ -25,10 +25,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TodoFragment : Fragment() {
+class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
-    val adapter by lazy { TodoAdapter() }
+    val adapter by lazy { TodoAdapter(this) }
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
@@ -108,5 +108,13 @@ class TodoFragment : Fragment() {
                     mainViewModel.deleteTodoItem(item)
                 }
             })
+    }
+
+    override fun onItemClick(todoItem: TodoItem) {
+        mainViewModel.onItemSelected(todoItem)
+    }
+
+    override fun onCheckBoxClick(todoItem: TodoItem, isChecked: Boolean) {
+        mainViewModel.onItemCheckedChanged(todoItem, isChecked)
     }
 }
