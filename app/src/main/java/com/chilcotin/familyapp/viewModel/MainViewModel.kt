@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.chilcotin.familyapp.db.MainDb
 import com.chilcotin.familyapp.entity.TodoItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,6 +17,9 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val mainDb: MainDb
 ) : ViewModel() {
+
+    private val itemEventChannel = Channel<ItemEvent>()
+    val itemEvent = itemEventChannel.receiveAsFlow()
 
     fun insertTodoItem(item: TodoItem) = viewModelScope.launch {
         mainDb.getDao().insertTodoItem(item)
@@ -26,6 +31,11 @@ class MainViewModel @Inject constructor(
 
     fun deleteTodoItem(item: TodoItem) = viewModelScope.launch {
         mainDb.getDao().deleteTodoItem(item)
+        itemEventChannel.send(ItemEvent.ShowUndoDeleteItemMessage(item))
+    }
+
+    fun onUndoDeleteClick(item: TodoItem) = viewModelScope.launch {
+        mainDb.getDao().insertTodoItem(item)
     }
 
     fun getAllTodoItem(): LiveData<List<TodoItem>> = mainDb.getDao().getAllTodoItems().asLiveData()
@@ -34,6 +44,10 @@ class MainViewModel @Inject constructor(
 
     fun onItemCheckedChanged(todoItem: TodoItem, isChecked: Boolean) = viewModelScope.launch {
         mainDb.getDao().updateTodoItem(todoItem.copy(isChecked = isChecked))
+    }
+
+    sealed class ItemEvent {
+        data class ShowUndoDeleteItemMessage(val todoItem: TodoItem) : ItemEvent()
     }
 
     class MainViewModelFactory(private val mainDb: MainDb) : ViewModelProvider.Factory {

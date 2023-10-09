@@ -6,6 +6,9 @@
     <string name="shop_list">ShopList</string>
     <string name="chat">Chat</string>
     <string name="settings">Settings</string>
+    <!-- Snack bar -->
+    <string name="deleted">Deleted</string>
+    <string name="undo">Undo</string>
     <!-- Other -->
     <string name="background" translatable="false">Background</string>
     <string name="add_new_note" translatable="false">Add new note</string>

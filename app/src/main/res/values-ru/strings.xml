@@ -6,8 +6,10 @@
     <string name="shop_list">ShopList</string>
     <string name="chat">Chat</string>
     <string name="settings">Settings</string>
+    <string name="deleted">Удалено</string>
     <string name="title">Заголовок</string>
     <string name="description">Описание</string>
     <string name="empty_filed">Пустое поле</string>
     <string name="error_todo">Ошибка добавления заметки</string>
+    <string name="undo">Отмена</string>
 </resources>

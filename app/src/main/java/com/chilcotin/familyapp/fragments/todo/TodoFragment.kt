@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +24,7 @@ import com.chilcotin.familyapp.entity.TodoItem
 import com.chilcotin.familyapp.utils.Const.NEW_TODO
 import com.chilcotin.familyapp.utils.Const.NEW_TODO_REQUEST
 import com.chilcotin.familyapp.viewModel.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -67,6 +71,24 @@ class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
 
         binding.fbAddTask.setOnClickListener {
             findNavController().navigate(R.id.action_todoFragment_to_newTodoFragment)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.itemEvent.collect { event ->
+                    when (event) {
+                        is MainViewModel.ItemEvent.ShowUndoDeleteItemMessage -> {
+                            Snackbar.make(
+                                requireView(),
+                                getString(R.string.deleted),
+                                Snackbar.LENGTH_LONG
+                            ).setAction(R.string.undo) {
+                                mainViewModel.onUndoDeleteClick(event.todoItem)
+                            }.show()
+                        }
+                    }
+                }
+            }
         }
     }
 
