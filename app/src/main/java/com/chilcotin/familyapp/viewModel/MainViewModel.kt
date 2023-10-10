@@ -40,7 +40,9 @@ class MainViewModel @Inject constructor(
 
     fun getAllTodoItem(): LiveData<List<TodoItem>> = mainDb.getDao().getAllTodoItems().asLiveData()
 
-    fun onItemSelected(todoItem: TodoItem) {}
+    fun onItemSelected(todoItem: TodoItem) {
+
+    }
 
     fun onItemCheckedChanged(todoItem: TodoItem, isChecked: Boolean) = viewModelScope.launch {
         mainDb.getDao().updateTodoItem(todoItem.copy(isChecked = isChecked))

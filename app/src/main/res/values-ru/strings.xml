@@ -12,4 +12,6 @@
     <string name="empty_filed">Пустое поле</string>
     <string name="error_todo">Ошибка добавления заметки</string>
     <string name="undo">Отмена</string>
+    <string name="done">Выполнено</string>
+    <string name="update_date">Обновить дату</string>
 </resources>

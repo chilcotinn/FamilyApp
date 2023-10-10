@@ -16,4 +16,6 @@
     <string name="description">Description</string>
     <string name="empty_filed">Empty field</string>
     <string name="error_todo">Error Todo task</string>
+    <string name="done">Done</string>
+    <string name="update_date">Update date</string>
 </resources>
