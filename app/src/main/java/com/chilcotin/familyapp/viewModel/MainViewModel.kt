@@ -40,8 +40,9 @@ class MainViewModel @Inject constructor(
 
     fun getAllTodoItem(): LiveData<List<TodoItem>> = mainDb.getDao().getAllTodoItems().asLiveData()
 
-    fun onItemSelected(todoItem: TodoItem) {
-
+    fun onItemSelected(item: TodoItem) = viewModelScope.launch {
+        mainDb.getDao().updateTodoItem(item)
+        itemEventChannel.send(ItemEvent.NavigateToEditItemScreen(item))
     }
 
     fun onItemCheckedChanged(todoItem: TodoItem, isChecked: Boolean) = viewModelScope.launch {
@@ -50,6 +51,7 @@ class MainViewModel @Inject constructor(
 
     sealed class ItemEvent {
         data class ShowUndoDeleteItemMessage(val todoItem: TodoItem) : ItemEvent()
+        data class NavigateToEditItemScreen(val todoItem: TodoItem) : ItemEvent()
     }
 
     class MainViewModelFactory(private val mainDb: MainDb) : ViewModelProvider.Factory {

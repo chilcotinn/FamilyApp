@@ -86,6 +86,10 @@ class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
                                 mainViewModel.onUndoDeleteClick(event.todoItem)
                             }.show()
                         }
+
+                        is MainViewModel.ItemEvent.NavigateToEditItemScreen -> {
+                            findNavController().navigate(R.id.action_todoFragment_to_editTodoFragment)
+                        }
                     }
                 }
             }

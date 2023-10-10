@@ -1,6 +1,7 @@
 package com.chilcotin.familyapp.fragments.todo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ class EditTodoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditTodoBinding.inflate(layoutInflater, container, false)
+        Log.d("MyLog", "onCreateView EditTodoFragment")
         return binding.root
     }
 
@@ -34,5 +36,6 @@ class EditTodoFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        Log.d("MyLog", "onDestroy EditTodoFragment")
     }
 }
