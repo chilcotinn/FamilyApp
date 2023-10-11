@@ -5,7 +5,7 @@ import java.util.Calendar
 import java.util.Locale
 
 object TimeManager {
-    private const val DEF_TIME_FORMAT = "hh:mm - dd/MM"
+    private const val DEF_TIME_FORMAT = "HH:mm - dd/MM"
 
     fun getTime(): String {
         val timeFormatter = SimpleDateFormat(DEF_TIME_FORMAT, Locale.getDefault())

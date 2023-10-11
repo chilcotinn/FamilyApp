@@ -31,25 +31,25 @@ class MainViewModel @Inject constructor(
 
     fun deleteTodoItem(item: TodoItem) = viewModelScope.launch {
         mainDb.getDao().deleteTodoItem(item)
-        itemEventChannel.send(ItemEvent.ShowUndoDeleteItemMessage(item))
+        itemEventChannel.send(ItemEvent.ShowUndoDeleteTodoItemMessage(item))
     }
 
-    fun onUndoDeleteClick(item: TodoItem) = viewModelScope.launch {
+    fun onTodoItemUndoDeleteClick(item: TodoItem) = viewModelScope.launch {
         mainDb.getDao().insertTodoItem(item)
     }
 
     fun getAllTodoItem(): LiveData<List<TodoItem>> = mainDb.getDao().getAllTodoItems().asLiveData()
 
-    fun onItemSelected(item: TodoItem) = viewModelScope.launch {
+    fun onTodoItemSelected(item: TodoItem) = viewModelScope.launch {
         itemEventChannel.send(ItemEvent.NavigateToEditItemScreen(item))
     }
 
-    fun onItemCheckedChanged(todoItem: TodoItem, isChecked: Boolean) = viewModelScope.launch {
+    fun onTodoItemCheckedChanged(todoItem: TodoItem, isChecked: Boolean) = viewModelScope.launch {
         mainDb.getDao().updateTodoItem(todoItem.copy(isChecked = isChecked))
     }
 
     sealed class ItemEvent {
-        data class ShowUndoDeleteItemMessage(val todoItem: TodoItem) : ItemEvent()
+        data class ShowUndoDeleteTodoItemMessage(val todoItem: TodoItem) : ItemEvent()
         data class NavigateToEditItemScreen(val todoItem: TodoItem) : ItemEvent()
     }
 

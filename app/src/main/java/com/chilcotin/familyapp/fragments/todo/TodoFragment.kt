@@ -80,13 +80,13 @@ class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mainViewModel.itemEvent.collect { event ->
                     when (event) {
-                        is MainViewModel.ItemEvent.ShowUndoDeleteItemMessage -> {
+                        is MainViewModel.ItemEvent.ShowUndoDeleteTodoItemMessage -> {
                             Snackbar.make(
                                 requireView(),
                                 getString(R.string.deleted),
                                 Snackbar.LENGTH_LONG
                             ).setAction(R.string.undo) {
-                                mainViewModel.onUndoDeleteClick(event.todoItem)
+                                mainViewModel.onTodoItemUndoDeleteClick(event.todoItem)
                             }.show()
                         }
 
@@ -143,10 +143,10 @@ class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(todoItem: TodoItem) {
-        mainViewModel.onItemSelected(todoItem)
+        mainViewModel.onTodoItemSelected(todoItem)
     }
 
     override fun onCheckBoxClick(todoItem: TodoItem, isChecked: Boolean) {
-        mainViewModel.onItemCheckedChanged(todoItem, isChecked)
+        mainViewModel.onTodoItemCheckedChanged(todoItem, isChecked)
     }
 }

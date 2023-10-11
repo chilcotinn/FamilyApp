@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface Dao {
 
+    @Query("SELECT * FROM todo_list")
+    fun getAllTodoItems(): Flow<List<TodoItem>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodoItem(item: TodoItem)
 
@@ -20,7 +23,4 @@ interface Dao {
 
     @Delete
     suspend fun deleteTodoItem(item: TodoItem)
-
-    @Query("SELECT * FROM todo_list")
-    fun getAllTodoItems(): Flow<List<TodoItem>>
 }
