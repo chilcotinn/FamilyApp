@@ -41,7 +41,6 @@ class MainViewModel @Inject constructor(
     fun getAllTodoItem(): LiveData<List<TodoItem>> = mainDb.getDao().getAllTodoItems().asLiveData()
 
     fun onItemSelected(item: TodoItem) = viewModelScope.launch {
-        mainDb.getDao().updateTodoItem(item)
         itemEventChannel.send(ItemEvent.NavigateToEditItemScreen(item))
     }
 

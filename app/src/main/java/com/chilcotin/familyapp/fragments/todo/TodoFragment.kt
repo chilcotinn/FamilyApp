@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
@@ -23,6 +24,8 @@ import com.chilcotin.familyapp.db.TodoAdapter
 import com.chilcotin.familyapp.entity.TodoItem
 import com.chilcotin.familyapp.utils.Const.NEW_TODO
 import com.chilcotin.familyapp.utils.Const.NEW_TODO_REQUEST
+import com.chilcotin.familyapp.utils.Const.UPDATE_TODO
+import com.chilcotin.familyapp.utils.Const.UPDATE_TODO_REQUEST
 import com.chilcotin.familyapp.viewModel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,6 +91,9 @@ class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
                         }
 
                         is MainViewModel.ItemEvent.NavigateToEditItemScreen -> {
+                            val bundle = Bundle()
+                            bundle.putParcelable(UPDATE_TODO, event.todoItem)
+                            setFragmentResult(UPDATE_TODO_REQUEST, bundle)
                             findNavController().navigate(R.id.action_todoFragment_to_editTodoFragment)
                         }
                     }
