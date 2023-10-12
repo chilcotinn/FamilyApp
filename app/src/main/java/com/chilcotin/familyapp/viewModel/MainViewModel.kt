@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chilcotin.familyapp.db.MainDb
+import com.chilcotin.familyapp.entity.ShareTodoItem
 import com.chilcotin.familyapp.entity.TodoItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -20,6 +21,8 @@ class MainViewModel @Inject constructor(
 
     private val itemEventChannel = Channel<ItemEvent>()
     val itemEvent = itemEventChannel.receiveAsFlow()
+
+    fun getAllTodoItem(): LiveData<List<TodoItem>> = mainDb.getDao().getAllTodoItems().asLiveData()
 
     fun insertTodoItem(item: TodoItem) = viewModelScope.launch {
         mainDb.getDao().insertTodoItem(item)
@@ -38,19 +41,49 @@ class MainViewModel @Inject constructor(
         mainDb.getDao().insertTodoItem(item)
     }
 
-    fun getAllTodoItem(): LiveData<List<TodoItem>> = mainDb.getDao().getAllTodoItems().asLiveData()
-
     fun onTodoItemSelected(item: TodoItem) = viewModelScope.launch {
-        itemEventChannel.send(ItemEvent.NavigateToEditItemScreen(item))
+        itemEventChannel.send(ItemEvent.NavigateToEditTodoItemScreen(item))
     }
 
-    fun onTodoItemCheckedChanged(todoItem: TodoItem, isChecked: Boolean) = viewModelScope.launch {
-        mainDb.getDao().updateTodoItem(todoItem.copy(isChecked = isChecked))
+    fun onTodoItemCheckedChanged(item: TodoItem, isChecked: Boolean) = viewModelScope.launch {
+        mainDb.getDao().updateTodoItem(item.copy(isChecked = isChecked))
     }
+
+
+    fun getAllShareTodoItem(): LiveData<List<ShareTodoItem>> =
+        mainDb.getDao().getAllShareTodoItems().asLiveData()
+
+    fun insertShareTodoItem(item: ShareTodoItem) = viewModelScope.launch {
+        mainDb.getDao().insertShareTodoItem(item)
+    }
+
+    fun updateShareTodoItem(item: ShareTodoItem) = viewModelScope.launch {
+        mainDb.getDao().updateShareTodoItem(item)
+    }
+
+    fun deleteShareTodoItem(item: ShareTodoItem) = viewModelScope.launch {
+        mainDb.getDao().deleteShareTodoItem(item)
+        itemEventChannel.send(ItemEvent.ShowUndoDeleteShareTodoItemMessage(item))
+    }
+
+    fun onShareTodoItemUndoDeleteClick(item: ShareTodoItem) = viewModelScope.launch {
+        mainDb.getDao().insertShareTodoItem(item)
+    }
+
+    fun onShareTodoItemSelected(item: ShareTodoItem) = viewModelScope.launch {
+        itemEventChannel.send(ItemEvent.NavigateToEditShareTodoItemScreen(item))
+    }
+
+    fun onShareTodoItemCheckedChanged(item: ShareTodoItem, isChecked: Boolean) =
+        viewModelScope.launch {
+            mainDb.getDao().updateShareTodoItem(item.copy(isChecked = isChecked))
+        }
 
     sealed class ItemEvent {
         data class ShowUndoDeleteTodoItemMessage(val todoItem: TodoItem) : ItemEvent()
-        data class NavigateToEditItemScreen(val todoItem: TodoItem) : ItemEvent()
+        data class NavigateToEditTodoItemScreen(val todoItem: TodoItem) : ItemEvent()
+        data class ShowUndoDeleteShareTodoItemMessage(val shareTodoItem: ShareTodoItem) : ItemEvent()
+        data class NavigateToEditShareTodoItemScreen(val shareTodoItem: ShareTodoItem) : ItemEvent()
     }
 
     class MainViewModelFactory(private val mainDb: MainDb) : ViewModelProvider.Factory {

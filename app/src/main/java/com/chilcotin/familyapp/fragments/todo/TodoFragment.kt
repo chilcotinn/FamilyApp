@@ -2,6 +2,7 @@ package com.chilcotin.familyapp.fragments.todo
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.R
+import com.chilcotin.familyapp.adapters.TodoAdapter
 import com.chilcotin.familyapp.databinding.FragmentTodoBinding
-import com.chilcotin.familyapp.db.TodoAdapter
 import com.chilcotin.familyapp.entity.TodoItem
 import com.chilcotin.familyapp.utils.Const.NEW_TODO
 import com.chilcotin.familyapp.utils.Const.NEW_TODO_REQUEST
@@ -90,11 +91,15 @@ class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
                             }.show()
                         }
 
-                        is MainViewModel.ItemEvent.NavigateToEditItemScreen -> {
+                        is MainViewModel.ItemEvent.NavigateToEditTodoItemScreen -> {
                             val bundle = Bundle()
                             bundle.putParcelable(UPDATE_TODO, event.todoItem)
                             setFragmentResult(UPDATE_TODO_REQUEST, bundle)
                             findNavController().navigate(R.id.action_todoFragment_to_editTodoFragment)
+                        }
+
+                        else -> {
+                            Log.d("MyLog", getString(R.string.error))
                         }
                     }
                 }

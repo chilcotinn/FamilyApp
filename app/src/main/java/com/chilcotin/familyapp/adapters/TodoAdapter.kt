@@ -1,4 +1,4 @@
-package com.chilcotin.familyapp.db
+package com.chilcotin.familyapp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -17,4 +17,5 @@
     <string name="undo">Отмена</string>
     <string name="done">Выполнено</string>
     <string name="update_date">Обновить дату</string>
+    <string name="error">Ошибка</string>
 </resources>
