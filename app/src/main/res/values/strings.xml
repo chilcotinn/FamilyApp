@@ -10,8 +10,9 @@
     <string name="deleted">Deleted</string>
     <string name="undo">Undo</string>
     <!-- Other -->
-    <string name="background" translatable="false">Background</string>
-    <string name="add_new_note" translatable="false">Add new note</string>
+    <string name="background">Background</string>
+    <string name="add_new_note">Add new note</string>
+    <string name="add_new_share_note">Add new share note</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="empty_filed">Empty field</string>

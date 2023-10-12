@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.todo.TodoFragment">
+    tools:context=".fragments.shareTodo.ShareTodoFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcShareTodoList"
@@ -19,14 +19,14 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fbAddTask"
+        android:id="@+id/fbAddShareTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:alpha="0.7"
         android:clickable="true"
-        android:contentDescription="@string/add_new_note"
+        android:contentDescription="@string/add_new_share_note"
         android:focusable="true"
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/blue"
