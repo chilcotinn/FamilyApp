@@ -64,28 +64,33 @@ class EditShareTodoFragment : Fragment() {
 
         binding.apply {
             fbOkTask.setOnClickListener {
-                if (checkBoxUpdateDate.isChecked) {
-                    mainViewModel.updateShareTodoItem(
-                        ShareTodoItem(
-                            edTitle.text.toString(),
-                            edDescription.text.toString(),
-                            getTime(),
-                            checkBox.isChecked,
-                            id = idShareTodoItem
-                        )
-                    )
+                if (edTitle.text.isEmpty()) {
+                    edTitle.error = context?.getString(R.string.empty_filed)
                 } else {
-                    mainViewModel.updateShareTodoItem(
-                        ShareTodoItem(
-                            edTitle.text.toString(),
-                            edDescription.text.toString(),
-                            tvTime.text.toString(),
-                            checkBox.isChecked,
-                            id = idShareTodoItem
+                    if (checkBoxUpdateDate.isChecked) {
+                        mainViewModel.updateShareTodoItem(
+                            ShareTodoItem(
+                                edTitle.text.toString(),
+                                edDescription.text.toString(),
+                                getTime(),
+                                checkBox.isChecked,
+                                id = idShareTodoItem
+                            )
                         )
-                    )
+                        findNavController().navigate(R.id.action_editShareTodoFragment_to_shareTodoFragment)
+                    } else {
+                        mainViewModel.updateShareTodoItem(
+                            ShareTodoItem(
+                                edTitle.text.toString(),
+                                edDescription.text.toString(),
+                                tvTime.text.toString(),
+                                checkBox.isChecked,
+                                id = idShareTodoItem
+                            )
+                        )
+                        findNavController().navigate(R.id.action_editShareTodoFragment_to_shareTodoFragment)
+                    }
                 }
-                findNavController().navigate(R.id.action_editShareTodoFragment_to_shareTodoFragment)
             }
         }
     }

@@ -63,28 +63,33 @@ class EditTodoFragment : Fragment() {
 
         binding.apply {
             fbOkTask.setOnClickListener {
-                if (checkBoxUpdateDate.isChecked) {
-                    mainViewModel.updateTodoItem(
-                        TodoItem(
-                            edTitle.text.toString(),
-                            edDescription.text.toString(),
-                            getTime(),
-                            checkBox.isChecked,
-                            idTodoItem
-                        )
-                    )
+                if (edTitle.text.isEmpty()) {
+                    edTitle.error = context?.getString(R.string.empty_filed)
                 } else {
-                    mainViewModel.updateTodoItem(
-                        TodoItem(
-                            edTitle.text.toString(),
-                            edDescription.text.toString(),
-                            tvTime.text.toString(),
-                            checkBox.isChecked,
-                            idTodoItem
+                    if (checkBoxUpdateDate.isChecked) {
+                        mainViewModel.updateTodoItem(
+                            TodoItem(
+                                edTitle.text.toString(),
+                                edDescription.text.toString(),
+                                getTime(),
+                                checkBox.isChecked,
+                                idTodoItem
+                            )
                         )
-                    )
+                        findNavController().navigate(R.id.action_editTodoFragment_to_todoFragment)
+                    } else {
+                        mainViewModel.updateTodoItem(
+                            TodoItem(
+                                edTitle.text.toString(),
+                                edDescription.text.toString(),
+                                tvTime.text.toString(),
+                                checkBox.isChecked,
+                                idTodoItem
+                            )
+                        )
+                        findNavController().navigate(R.id.action_editTodoFragment_to_todoFragment)
+                    }
                 }
-                findNavController().navigate(R.id.action_editTodoFragment_to_todoFragment)
             }
         }
     }
