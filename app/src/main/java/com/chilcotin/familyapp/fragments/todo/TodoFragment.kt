@@ -47,10 +47,11 @@ class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
 
         setFragmentResultListener(NEW_TODO_REQUEST) { _, bundle ->
             val result: TodoItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(NEW_TODO, TodoItem::class.java) ?: TodoItem("Error")
+                bundle.getParcelable(NEW_TODO, TodoItem::class.java)
+                    ?: TodoItem(getString(R.string.error))
             } else {
                 @Suppress("DEPRECATION")
-                bundle.getParcelable(NEW_TODO) ?: TodoItem("Error")
+                bundle.getParcelable(NEW_TODO) ?: TodoItem(getString(R.string.error))
             }
             mainViewModel.insertTodoItem(result)
         }

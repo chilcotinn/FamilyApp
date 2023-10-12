@@ -41,6 +41,7 @@ class ShareTodoAdapter(private val listener: OnItemClickListener) :
                 tvDescription.text = shareTodoItem.description
                 tvTime.text = shareTodoItem.time
                 checkBox.isChecked = shareTodoItem.isChecked
+                tvCreator.text = shareTodoItem.creator
             }
         }
     }

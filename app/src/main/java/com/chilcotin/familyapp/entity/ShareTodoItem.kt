@@ -23,7 +23,7 @@ data class ShareTodoItem(
     val isChecked: Boolean = false,
 
     @ColumnInfo(name = "creator")
-    val creator: String = "",
+    val creator: String = "Unknown creator",
 
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
