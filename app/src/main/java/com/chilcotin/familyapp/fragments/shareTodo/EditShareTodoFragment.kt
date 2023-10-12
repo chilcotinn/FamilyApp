@@ -1,4 +1,4 @@
-package com.chilcotin.familyapp.fragments.todo
+package com.chilcotin.familyapp.fragments.shareTodo
 
 import android.os.Build
 import android.os.Bundle
@@ -11,19 +11,19 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.R
-import com.chilcotin.familyapp.databinding.FragmentEditTodoBinding
-import com.chilcotin.familyapp.entity.TodoItem
-import com.chilcotin.familyapp.utils.Const.UPDATE_TODO
-import com.chilcotin.familyapp.utils.Const.UPDATE_TODO_REQUEST
+import com.chilcotin.familyapp.databinding.FragmentEditShareTodoBinding
+import com.chilcotin.familyapp.entity.ShareTodoItem
+import com.chilcotin.familyapp.utils.Const.UPDATE_SHARE_TODO
+import com.chilcotin.familyapp.utils.Const.UPDATE_SHARE_TODO_REQUEST
 import com.chilcotin.familyapp.utils.TimeManager.getTime
 import com.chilcotin.familyapp.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditTodoFragment : Fragment() {
-    private var _binding: FragmentEditTodoBinding? = null
+class EditShareTodoFragment : Fragment() {
+    private var _binding: FragmentEditShareTodoBinding? = null
     private val binding get() = _binding!!
-    private var idTodoItem = 0
+    private var idShareTodoItem = 0
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
@@ -32,20 +32,21 @@ class EditTodoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setFragmentResultListener(UPDATE_TODO_REQUEST) { _, bundle ->
-            val result: TodoItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(UPDATE_TODO, TodoItem::class.java)
-                    ?: TodoItem(getString(R.string.error))
+        setFragmentResultListener(UPDATE_SHARE_TODO_REQUEST) { _, bundle ->
+            val result: ShareTodoItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                bundle.getParcelable(UPDATE_SHARE_TODO, ShareTodoItem::class.java) ?: ShareTodoItem(
+                    getString(R.string.error)
+                )
             } else {
                 @Suppress("DEPRECATION")
-                bundle.getParcelable(UPDATE_TODO) ?: TodoItem(getString(R.string.error))
+                bundle.getParcelable(UPDATE_SHARE_TODO) ?: ShareTodoItem(getString(R.string.error))
             }
             binding.apply {
                 edTitle.setText(result.title)
                 edDescription.setText(result.description)
                 tvTime.text = result.time
                 checkBox.isChecked = result.isChecked
-                idTodoItem = result.id
+                idShareTodoItem = result.id
             }
         }
     }
@@ -54,7 +55,7 @@ class EditTodoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentEditTodoBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentEditShareTodoBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -64,27 +65,27 @@ class EditTodoFragment : Fragment() {
         binding.apply {
             fbOkTask.setOnClickListener {
                 if (checkBoxUpdateDate.isChecked) {
-                    mainViewModel.updateTodoItem(
-                        TodoItem(
+                    mainViewModel.updateShareTodoItem(
+                        ShareTodoItem(
                             edTitle.text.toString(),
                             edDescription.text.toString(),
                             getTime(),
                             checkBox.isChecked,
-                            idTodoItem
+                            id = idShareTodoItem
                         )
                     )
                 } else {
-                    mainViewModel.updateTodoItem(
-                        TodoItem(
+                    mainViewModel.updateShareTodoItem(
+                        ShareTodoItem(
                             edTitle.text.toString(),
                             edDescription.text.toString(),
                             tvTime.text.toString(),
                             checkBox.isChecked,
-                            idTodoItem
+                            id = idShareTodoItem
                         )
                     )
                 }
-                findNavController().navigate(R.id.action_editTodoFragment_to_todoFragment)
+                findNavController().navigate(R.id.action_editShareTodoFragment_to_shareTodoFragment)
             }
         }
     }

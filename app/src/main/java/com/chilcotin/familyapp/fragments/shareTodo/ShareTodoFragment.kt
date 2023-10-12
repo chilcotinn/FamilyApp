@@ -96,7 +96,7 @@ class ShareTodoFragment : Fragment(), ShareTodoAdapter.OnItemClickListener {
                             val bundle = Bundle()
                             bundle.putParcelable(UPDATE_SHARE_TODO, event.shareTodoItem)
                             setFragmentResult(UPDATE_SHARE_TODO_REQUEST, bundle)
-                            findNavController()
+                            findNavController().navigate(R.id.action_shareTodoFragment_to_editShareTodoFragment)
                         }
 
                         else -> {
