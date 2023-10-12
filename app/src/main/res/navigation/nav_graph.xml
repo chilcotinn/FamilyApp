@@ -26,7 +26,14 @@
         android:id="@+id/shareTodoFragment"
         android:name="com.chilcotin.familyapp.fragments.shareTodo.ShareTodoFragment"
         android:label="fragment_share_todo"
-        tools:layout="@layout/fragment_share_todo" />
+        tools:layout="@layout/fragment_share_todo" >
+        <action
+            android:id="@+id/action_shareTodoFragment_to_newShareTodoFragment"
+            app:destination="@id/newShareTodoFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/newShareTodoFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/shopListFragment"
         android:name="com.chilcotin.familyapp.fragments.shopList.ShopListFragment"
@@ -64,6 +71,18 @@
             app:destination="@id/todoFragment"
             app:launchSingleTop="false"
             app:popUpTo="@id/todoFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/newShareTodoFragment"
+        android:name="com.chilcotin.familyapp.fragments.shareTodo.NewShareTodoFragment"
+        android:label="NewShareTodoFragment"
+        tools:layout="@layout/fragment_new_share_todo">
+        <action
+            android:id="@+id/action_newShareTodoFragment_to_shareTodoFragment"
+            app:destination="@id/shareTodoFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/shareTodoFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

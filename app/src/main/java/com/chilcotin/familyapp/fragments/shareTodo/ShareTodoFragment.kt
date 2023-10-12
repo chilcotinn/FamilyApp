@@ -75,7 +75,7 @@ class ShareTodoFragment : Fragment(), ShareTodoAdapter.OnItemClickListener {
         itemTouchHelperCallback.attachToRecyclerView(binding.rcShareTodoList)
 
         binding.fbAddShareTask.setOnClickListener {
-            findNavController()
+            findNavController().navigate(R.id.action_shareTodoFragment_to_newShareTodoFragment)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
