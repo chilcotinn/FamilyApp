@@ -18,4 +18,12 @@
     <string name="done">Выполнено</string>
     <string name="update_date">Обновить дату</string>
     <string name="error">Ошибка</string>
+    <string name="todo_settings">ToDoList параметры</string>
+    <string name="todo_share_settings">ShareTodoList параметры</string>
+    <string name="shop_list_settings">ShopList параметры</string>
+    <string name="chat_settings">Chat параметры</string>
+    <string name="login">Вход в аккаунт</string>
+    <string name="sign_in_with_google">Вход через Google</string>
+    <string name="not_authorized">Пользователь не авторизован</string>
+    <string name="logout">Выйти</string>
 </resources>

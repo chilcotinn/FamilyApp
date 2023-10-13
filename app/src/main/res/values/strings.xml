@@ -9,6 +9,15 @@
     <!-- Snack bar -->
     <string name="deleted">Deleted</string>
     <string name="undo">Undo</string>
+    <!-- Settings -->
+    <string name="todo_settings">ToDoList settings</string>
+    <string name="todo_share_settings">ShareTodoList settings</string>
+    <string name="shop_list_settings">ShopList settings</string>
+    <string name="chat_settings">Chat settings</string>
+    <string name="login">Login account</string>
+    <string name="logout">Logout</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="not_authorized">User is not authorized</string>
     <!-- Other -->
     <string name="background">Background</string>
     <string name="add_new_note">Add new note</string>
