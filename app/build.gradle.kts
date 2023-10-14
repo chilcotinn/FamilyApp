@@ -6,6 +6,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
+    id("com.google.secrets_gradle_plugin") version "0.4"
 }
 
 android {
