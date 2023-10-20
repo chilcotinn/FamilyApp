@@ -26,4 +26,6 @@
     <string name="sign_in_with_google">Вход через Google</string>
     <string name="not_authorized">Пользователь не авторизован</string>
     <string name="logout">Выйти</string>
+    <string name="sign_out_done">Выход выполнен</string>
+    <string name="sign_in_done">Вход выполнен</string>
 </resources>

@@ -48,6 +48,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    defaultConfig {
+        resourceConfigurations.addAll(listOf("en", "ru"))
+    }
 }
 
 dependencies {

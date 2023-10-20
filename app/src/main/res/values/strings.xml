@@ -18,6 +18,8 @@
     <string name="logout">Logout</string>
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="not_authorized">User is not authorized</string>
+    <string name="sign_out_done">Sign out done</string>
+    <string name="sign_in_done">Sign in done</string>
     <!-- Other -->
     <string name="background">Background</string>
     <string name="add_new_note">Add new note</string>
