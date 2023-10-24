@@ -41,6 +41,7 @@ class SettingsFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            authButtonState()
             tvUser.text = FirebaseAuth.getInstance().currentUser?.displayName
 
             btGoogleLogin.setOnClickListener {
@@ -63,6 +64,7 @@ class SettingsFragment() : Fragment() {
             binding.tvUser.text = user?.displayName
             Toast.makeText(context, context?.getString(R.string.sign_in_done), Toast.LENGTH_SHORT)
                 .show()
+            authButtonState()
         }
     }
 
@@ -84,8 +86,19 @@ class SettingsFragment() : Fragment() {
                         context?.getString(R.string.sign_out_done),
                         Toast.LENGTH_SHORT
                     ).show()
-                    binding.tvUser.text = ""
+                    binding.tvUser.text = getString(R.string.not_authorized)
+                    authButtonState()
                 }
+        }
+    }
+
+    private fun authButtonState() {
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            binding.btGoogleLogin.isEnabled = true
+            binding.btLogout.isEnabled = false
+        } else {
+            binding.btGoogleLogin.isEnabled = false
+            binding.btLogout.isEnabled = true
         }
     }
 }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FamilyApp</string>
-    <string name="todo">ToDo</string>
-    <string name="todo_share">TodoShare</string>
-    <string name="shop_list">ShopList</string>
-    <string name="chat">Chat</string>
-    <string name="settings">Settings</string>
+    <string name="todo">Заметки</string>
+    <string name="todo_share">Наши дела</string>
+    <string name="shop_list">Покупки</string>
+    <string name="chat">Чат</string>
+    <string name="settings">Настройки</string>
     <string name="deleted">Удалено</string>
     <string name="background">Фон</string>
     <string name="add_new_note">Добавить новую заметку</string>
@@ -18,10 +17,10 @@
     <string name="done">Выполнено</string>
     <string name="update_date">Обновить дату</string>
     <string name="error">Ошибка</string>
-    <string name="todo_settings">ToDoList параметры</string>
-    <string name="todo_share_settings">ShareTodoList параметры</string>
-    <string name="shop_list_settings">ShopList параметры</string>
-    <string name="chat_settings">Chat параметры</string>
+    <string name="todo_settings">Настройки заметок</string>
+    <string name="todo_share_settings">Настройки наших дел</string>
+    <string name="shop_list_settings">Настройки покупок</string>
+    <string name="chat_settings">Настройки чата</string>
     <string name="login">Вход в аккаунт</string>
     <string name="sign_in_with_google">Вход через Google</string>
     <string name="not_authorized">Пользователь не авторизован</string>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FamilyApp</string>
+    <string name="app_name" translatable="false">FamilyApp</string>
     <!-- Items Navigation Bar -->
     <string name="todo">ToDo</string>
     <string name="todo_share">TodoShare</string>
