@@ -27,7 +27,7 @@ import com.chilcotin.familyapp.utils.Const.NEW_TODO
 import com.chilcotin.familyapp.utils.Const.NEW_TODO_REQUEST
 import com.chilcotin.familyapp.utils.Const.UPDATE_TODO
 import com.chilcotin.familyapp.utils.Const.UPDATE_TODO_REQUEST
-import com.chilcotin.familyapp.viewModel.MainViewModel
+import com.chilcotin.familyapp.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

@@ -16,7 +16,7 @@ import com.chilcotin.familyapp.entity.TodoItem
 import com.chilcotin.familyapp.utils.Const.UPDATE_TODO
 import com.chilcotin.familyapp.utils.Const.UPDATE_TODO_REQUEST
 import com.chilcotin.familyapp.utils.TimeManager.getTime
-import com.chilcotin.familyapp.viewModel.MainViewModel
+import com.chilcotin.familyapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

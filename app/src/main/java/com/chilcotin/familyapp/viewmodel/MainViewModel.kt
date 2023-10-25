@@ -1,4 +1,4 @@
-package com.chilcotin.familyapp.viewModel
+package com.chilcotin.familyapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -79,12 +79,14 @@ class MainViewModel @Inject constructor(
             mainDb.getDao().updateShareTodoItem(item.copy(isChecked = isChecked))
         }
 
+
     sealed class ItemEvent {
         data class ShowUndoDeleteTodoItemMessage(val todoItem: TodoItem) : ItemEvent()
         data class NavigateToEditTodoItemScreen(val todoItem: TodoItem) : ItemEvent()
         data class ShowUndoDeleteShareTodoItemMessage(val shareTodoItem: ShareTodoItem) : ItemEvent()
         data class NavigateToEditShareTodoItemScreen(val shareTodoItem: ShareTodoItem) : ItemEvent()
     }
+
 
     class MainViewModelFactory(private val mainDb: MainDb) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
