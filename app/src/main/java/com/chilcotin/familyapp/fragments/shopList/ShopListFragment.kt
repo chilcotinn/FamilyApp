@@ -9,7 +9,7 @@ import com.chilcotin.familyapp.databinding.FragmentShopListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ShopListFragment : Fragment() {
+class  ShopListFragment : Fragment() {
     private var _binding: FragmentShopListBinding? = null
     private val binding get() = _binding!!
 
