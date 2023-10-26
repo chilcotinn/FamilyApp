@@ -19,7 +19,7 @@
         tools:layout_editor_absoluteY="4dp">
 
         <TextView
-            android:id="@+id/tvShopListItem"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -40,8 +40,8 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_size"
             app:layout_constraintEnd_toEndOf="@+id/checkBox"
-            app:layout_constraintStart_toStartOf="@+id/tvShopListItem"
-            app:layout_constraintTop_toBottomOf="@+id/tvShopListItem"
+            app:layout_constraintStart_toStartOf="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:text="Description Description Descriptiof f daa af af aga dg" />
 
         <TextView

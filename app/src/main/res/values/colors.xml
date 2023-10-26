@@ -6,4 +6,6 @@
     <color name="rippleBottomBar">#7011B5F4</color>
     <color name="rippleFloatingButton">#11F4EC</color>
     <color name="backgroundTodo">#CC11BFF4</color>
+    <color name="red">#CCFB0606</color>
+    <color name="green">#CC0FE400</color>
 </resources>
