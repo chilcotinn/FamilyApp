@@ -1,11 +1,14 @@
 package com.chilcotin.familyapp.fragments.shopList
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chilcotin.familyapp.App
@@ -13,8 +16,11 @@ import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.adapters.ShopListAdapter
 import com.chilcotin.familyapp.databinding.FragmentShopListBinding
 import com.chilcotin.familyapp.entity.ShopListItem
+import com.chilcotin.familyapp.utils.Const.NEW_SHOP_LIST_ITEM
+import com.chilcotin.familyapp.utils.Const.NEW_SHOP_LIST_ITEM_REQUEST
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
@@ -24,6 +30,21 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setFragmentResultListener(NEW_SHOP_LIST_ITEM_REQUEST) { _, bundle ->
+            val result: ShopListItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                bundle.getParcelable(NEW_SHOP_LIST_ITEM, ShopListItem::class.java)
+                    ?: ShopListItem(getString(R.string.error))
+            } else {
+                @Suppress("DEPRECATION")
+                bundle.getParcelable(NEW_SHOP_LIST_ITEM) ?: ShopListItem(getString(R.string.error))
+            }
+            mainViewModel.insertShopListItem(result)
+        }
     }
 
     override fun onCreateView(
@@ -38,6 +59,7 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         initRcView()
+        observer()
 
         binding.fbAddShopList.setOnClickListener {
             findNavController().navigate(R.id.action_shopListFragment_to_newShopListItemFragment)
@@ -55,6 +77,17 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
         rcShopListItem.setHasFixedSize(true)
     }
 
+    private fun observer() {
+        lifecycle.coroutineScope.launch {
+            mainViewModel.getAllShopListItem().observe(viewLifecycleOwner) {
+                adapter.submitList(it)
+            }
+        }
+    }
+
     override fun onItemClick(shopListItem: ShopListItem) {
+    }
+
+    override fun deleteItem(shopListItem: ShopListItem) {
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chilcotin.familyapp.db.MainDb
 import com.chilcotin.familyapp.entity.ShareTodoItem
+import com.chilcotin.familyapp.entity.ShopListItem
 import com.chilcotin.familyapp.entity.TodoItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -78,6 +79,18 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             mainDb.getDao().updateShareTodoItem(item.copy(isChecked = isChecked))
         }
+
+
+    fun getAllShopListItem(): LiveData<List<ShopListItem>> =
+        mainDb.getDao().getAllShopListItem().asLiveData()
+
+    fun insertShopListItem(item: ShopListItem) = viewModelScope.launch {
+        mainDb.getDao().insertShopListItem(item)
+    }
+
+    fun deleteShopListItem(item: ShopListItem) = viewModelScope.launch {
+        mainDb.getDao().deleteShopListItem(item)
+    }
 
 
     sealed class ItemEvent {

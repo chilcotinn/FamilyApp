@@ -14,16 +14,16 @@ data class ShopListItem(
     val title: String,
 
     @ColumnInfo(name = "time")
-    val time: String,
+    val time: String = "",
 
     @ColumnInfo(name = "creator")
-    val creator: String,
+    val creator: String = "",
 
     @ColumnInfo(name = "allItemsCounter")
-    val allItemsCounter: Int,
+    val allItemsCounter: Int = 0,
 
     @ColumnInfo(name = "checkedItemsCounter")
-    val checkedItemsCounter: Int,
+    val checkedItemsCounter: Int = 0,
 
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

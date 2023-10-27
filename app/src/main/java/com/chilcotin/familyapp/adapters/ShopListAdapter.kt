@@ -49,6 +49,13 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
                         )
                     )
                 progressBar.progressTintList = colorState
+
+                itemView.setOnClickListener {
+                    listener.onItemClick(shopListItem)
+                }
+                ibDelete.setOnClickListener {
+                    listener.deleteItem(shopListItem)
+                }
             }
         }
 
@@ -82,5 +89,6 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
 
     interface OnItemClickListener {
         fun onItemClick(shopListItem: ShopListItem)
+        fun deleteItem(shopListItem: ShopListItem)
     }
 }

@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.chilcotin.familyapp.databinding.FragmentNewShopListItemBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewShopListItemFragment : Fragment() {
     private var _binding: FragmentNewShopListItemBinding? = null
     private val binding get() = _binding!!

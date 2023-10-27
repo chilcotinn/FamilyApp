@@ -10,4 +10,7 @@ object Const {
     const val NEW_SHARE_TODO_REQUEST = "new_share_todo_request"
     const val UPDATE_SHARE_TODO = "update_share_todo"
     const val UPDATE_SHARE_TODO_REQUEST = "update_share_todo_request"
+
+    const val NEW_SHOP_LIST_ITEM = "new_shop_list_item"
+    const val NEW_SHOP_LIST_ITEM_REQUEST = "new_shop_list_item_request"
 }
