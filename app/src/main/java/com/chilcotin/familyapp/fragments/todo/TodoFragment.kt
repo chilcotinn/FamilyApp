@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
-    val adapter by lazy { TodoAdapter(this) }
+    private val adapter by lazy { TodoAdapter(this) }
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)

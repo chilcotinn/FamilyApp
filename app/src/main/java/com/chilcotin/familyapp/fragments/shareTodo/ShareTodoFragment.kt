@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 class ShareTodoFragment : Fragment(), ShareTodoAdapter.OnItemClickListener {
     private var _binding: FragmentShareTodoBinding? = null
     private val binding get() = _binding!!
-    val adapter by lazy { ShareTodoAdapter(this) }
+    private val adapter by lazy { ShareTodoAdapter(this) }
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
