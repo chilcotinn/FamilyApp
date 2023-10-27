@@ -14,6 +14,7 @@ import com.chilcotin.familyapp.entity.ShareTodoItem
 import com.chilcotin.familyapp.utils.Const.NEW_SHARE_TODO
 import com.chilcotin.familyapp.utils.Const.NEW_SHARE_TODO_REQUEST
 import com.chilcotin.familyapp.utils.TimeManager.getTime
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,12 +55,24 @@ class NewShareTodoFragment : Fragment() {
     }
 
     private fun createNewShareTodoItem(): ShareTodoItem {
-        return ShareTodoItem(
-            binding.edTitle.text.toString(),
-            binding.edDescription.text.toString(),
-            getTime(),
-            false
-        )
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            return ShareTodoItem(
+                binding.edTitle.text.toString(),
+                binding.edDescription.text.toString(),
+                getTime(),
+                false,
+                user.displayName.toString(),
+            )
+        } else {
+            return ShareTodoItem(
+                binding.edTitle.text.toString(),
+                binding.edDescription.text.toString(),
+                getTime(),
+                false,
+                getString(R.string.not_authorized),
+            )
+        }
     }
 
     private fun showSoftKeyboard(view: View) {

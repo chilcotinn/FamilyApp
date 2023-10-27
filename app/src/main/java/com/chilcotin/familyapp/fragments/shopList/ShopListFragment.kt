@@ -1,5 +1,6 @@
 package com.chilcotin.familyapp.fragments.shopList
 
+import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -85,9 +86,25 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
         }
     }
 
+    private fun deleteAlertDialog(item: ShopListItem) {
+        val builder = AlertDialog.Builder(requireContext())
+        val dialog = builder.create()
+        dialog.setTitle(R.string.delete)
+
+        dialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok)) { _, _ ->
+            mainViewModel.deleteShopListItem(item)
+            dialog.dismiss()
+        }
+        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel)) { _, _ ->
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
     override fun onItemClick(shopListItem: ShopListItem) {
     }
 
     override fun deleteItem(shopListItem: ShopListItem) {
+        deleteAlertDialog(shopListItem)
     }
 }

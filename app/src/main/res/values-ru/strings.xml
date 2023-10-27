@@ -29,4 +29,6 @@
     <string name="sign_in_done">Вход выполнен</string>
     <string name="add_new_shop_list_item">Добавить новый список покупок</string>
     <string name="delete">Удалить</string>
+    <string name="ok">Ок</string>
+    <string name="cancel">Отмена</string>
 </resources>
