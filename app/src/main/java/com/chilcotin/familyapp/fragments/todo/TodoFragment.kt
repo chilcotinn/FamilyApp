@@ -23,10 +23,7 @@ import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.adapters.TodoAdapter
 import com.chilcotin.familyapp.databinding.FragmentTodoBinding
 import com.chilcotin.familyapp.entity.TodoItem
-import com.chilcotin.familyapp.utils.Const.NEW_TODO
-import com.chilcotin.familyapp.utils.Const.NEW_TODO_REQUEST
-import com.chilcotin.familyapp.utils.Const.UPDATE_TODO
-import com.chilcotin.familyapp.utils.Const.UPDATE_TODO_REQUEST
+import com.chilcotin.familyapp.utils.Const
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,13 +42,13 @@ class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setFragmentResultListener(NEW_TODO_REQUEST) { _, bundle ->
+        setFragmentResultListener(Const.NEW_TODO_REQUEST) { _, bundle ->
             val result: TodoItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(NEW_TODO, TodoItem::class.java)
+                bundle.getParcelable(Const.NEW_TODO, TodoItem::class.java)
                     ?: TodoItem(getString(R.string.error))
             } else {
                 @Suppress("DEPRECATION")
-                bundle.getParcelable(NEW_TODO) ?: TodoItem(getString(R.string.error))
+                bundle.getParcelable(Const.NEW_TODO) ?: TodoItem(getString(R.string.error))
             }
             mainViewModel.insertTodoItem(result)
         }
@@ -94,8 +91,8 @@ class TodoFragment : Fragment(), TodoAdapter.OnItemClickListener {
 
                         is MainViewModel.ItemEvent.NavigateToEditTodoItemScreen -> {
                             val bundle = Bundle()
-                            bundle.putParcelable(UPDATE_TODO, event.todoItem)
-                            setFragmentResult(UPDATE_TODO_REQUEST, bundle)
+                            bundle.putParcelable(Const.UPDATE_TODO, event.todoItem)
+                            setFragmentResult(Const.UPDATE_TODO_REQUEST, bundle)
                             findNavController().navigate(R.id.action_todoFragment_to_editTodoFragment)
                         }
 

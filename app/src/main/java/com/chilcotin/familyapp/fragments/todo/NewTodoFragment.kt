@@ -10,10 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentNewTodoBinding
 import com.chilcotin.familyapp.entity.TodoItem
-import com.chilcotin.familyapp.utils.Const.NEW_TODO
-import com.chilcotin.familyapp.utils.Const.NEW_TODO_REQUEST
-import com.chilcotin.familyapp.utils.InputManager.showSoftKeyboard
-import com.chilcotin.familyapp.utils.TimeManager.getTime
+import com.chilcotin.familyapp.utils.Const
+import com.chilcotin.familyapp.utils.InputManager
+import com.chilcotin.familyapp.utils.TimeManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,13 +33,13 @@ class NewTodoFragment : Fragment() {
 
         binding.apply {
             edTitle.requestFocus()
-            showSoftKeyboard(edTitle, requireContext())
+            InputManager.showSoftKeyboard(edTitle, requireContext())
 
             fbOkTask.setOnClickListener {
                 if (edTitle.text.isNotEmpty()) {
                     val bundle = Bundle()
-                    bundle.putParcelable(NEW_TODO, createNewTodoItem())
-                    setFragmentResult(NEW_TODO_REQUEST, bundle)
+                    bundle.putParcelable(Const.NEW_TODO, createNewTodoItem())
+                    setFragmentResult(Const.NEW_TODO_REQUEST, bundle)
                     findNavController().navigate(R.id.action_newTodoFragment_to_todoFragment)
                 } else {
                     edTitle.error = context?.getString(R.string.empty_filed)
@@ -58,7 +57,7 @@ class NewTodoFragment : Fragment() {
         return TodoItem(
             binding.edTitle.text.toString(),
             binding.edDescription.text.toString(),
-            getTime(),
+            TimeManager.getTime(),
             false,
         )
     }

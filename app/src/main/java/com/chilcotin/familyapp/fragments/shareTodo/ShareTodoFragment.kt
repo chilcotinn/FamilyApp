@@ -23,10 +23,7 @@ import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.adapters.ShareTodoAdapter
 import com.chilcotin.familyapp.databinding.FragmentShareTodoBinding
 import com.chilcotin.familyapp.entity.ShareTodoItem
-import com.chilcotin.familyapp.utils.Const.NEW_SHARE_TODO
-import com.chilcotin.familyapp.utils.Const.NEW_SHARE_TODO_REQUEST
-import com.chilcotin.familyapp.utils.Const.UPDATE_SHARE_TODO
-import com.chilcotin.familyapp.utils.Const.UPDATE_SHARE_TODO_REQUEST
+import com.chilcotin.familyapp.utils.Const
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,13 +42,14 @@ class ShareTodoFragment : Fragment(), ShareTodoAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setFragmentResultListener(NEW_SHARE_TODO_REQUEST) { _, bundle ->
+        setFragmentResultListener(Const.NEW_SHARE_TODO_REQUEST) { _, bundle ->
             val result: ShareTodoItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(NEW_SHARE_TODO, ShareTodoItem::class.java)
+                bundle.getParcelable(Const.NEW_SHARE_TODO, ShareTodoItem::class.java)
                     ?: ShareTodoItem(getString(R.string.error))
             } else {
                 @Suppress("DEPRECATION")
-                bundle.getParcelable(NEW_SHARE_TODO) ?: ShareTodoItem(getString(R.string.error))
+                bundle.getParcelable(Const.NEW_SHARE_TODO)
+                    ?: ShareTodoItem(getString(R.string.error))
             }
             mainViewModel.insertShareTodoItem(result)
         }
@@ -94,8 +92,8 @@ class ShareTodoFragment : Fragment(), ShareTodoAdapter.OnItemClickListener {
 
                         is MainViewModel.ItemEvent.NavigateToEditShareTodoItemScreen -> {
                             val bundle = Bundle()
-                            bundle.putParcelable(UPDATE_SHARE_TODO, event.shareTodoItem)
-                            setFragmentResult(UPDATE_SHARE_TODO_REQUEST, bundle)
+                            bundle.putParcelable(Const.UPDATE_SHARE_TODO, event.shareTodoItem)
+                            setFragmentResult(Const.UPDATE_SHARE_TODO_REQUEST, bundle)
                             findNavController().navigate(R.id.action_shareTodoFragment_to_editShareTodoFragment)
                         }
 

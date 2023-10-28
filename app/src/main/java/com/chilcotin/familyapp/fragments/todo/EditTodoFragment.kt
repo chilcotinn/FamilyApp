@@ -13,9 +13,8 @@ import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentEditTodoBinding
 import com.chilcotin.familyapp.entity.TodoItem
-import com.chilcotin.familyapp.utils.Const.UPDATE_TODO
-import com.chilcotin.familyapp.utils.Const.UPDATE_TODO_REQUEST
-import com.chilcotin.familyapp.utils.TimeManager.getTime
+import com.chilcotin.familyapp.utils.Const
+import com.chilcotin.familyapp.utils.TimeManager
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,13 +31,13 @@ class EditTodoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setFragmentResultListener(UPDATE_TODO_REQUEST) { _, bundle ->
+        setFragmentResultListener(Const.UPDATE_TODO_REQUEST) { _, bundle ->
             val result: TodoItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(UPDATE_TODO, TodoItem::class.java)
+                bundle.getParcelable(Const.UPDATE_TODO, TodoItem::class.java)
                     ?: TodoItem(getString(R.string.error))
             } else {
                 @Suppress("DEPRECATION")
-                bundle.getParcelable(UPDATE_TODO) ?: TodoItem(getString(R.string.error))
+                bundle.getParcelable(Const.UPDATE_TODO) ?: TodoItem(getString(R.string.error))
             }
             binding.apply {
                 edTitle.setText(result.title)
@@ -71,12 +70,11 @@ class EditTodoFragment : Fragment() {
                             TodoItem(
                                 edTitle.text.toString(),
                                 edDescription.text.toString(),
-                                getTime(),
+                                TimeManager.getTime(),
                                 checkBox.isChecked,
                                 idTodoItem
                             )
                         )
-                        findNavController().navigate(R.id.action_editTodoFragment_to_todoFragment)
                     } else {
                         mainViewModel.updateTodoItem(
                             TodoItem(
@@ -87,8 +85,8 @@ class EditTodoFragment : Fragment() {
                                 idTodoItem
                             )
                         )
-                        findNavController().navigate(R.id.action_editTodoFragment_to_todoFragment)
                     }
+                    findNavController().navigate(R.id.action_editTodoFragment_to_todoFragment)
                 }
             }
         }

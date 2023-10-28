@@ -10,10 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentNewShareTodoBinding
 import com.chilcotin.familyapp.entity.ShareTodoItem
-import com.chilcotin.familyapp.utils.Const.NEW_SHARE_TODO
-import com.chilcotin.familyapp.utils.Const.NEW_SHARE_TODO_REQUEST
-import com.chilcotin.familyapp.utils.InputManager.showSoftKeyboard
-import com.chilcotin.familyapp.utils.TimeManager.getTime
+import com.chilcotin.familyapp.utils.Const
+import com.chilcotin.familyapp.utils.InputManager
+import com.chilcotin.familyapp.utils.TimeManager
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,13 +33,13 @@ class NewShareTodoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             edTitle.requestFocus()
-            showSoftKeyboard(edTitle, requireContext())
+            InputManager.showSoftKeyboard(edTitle, requireContext())
 
             fbOkTask.setOnClickListener {
                 if (edTitle.text.isNotEmpty()) {
                     val bundle = Bundle()
-                    bundle.putParcelable(NEW_SHARE_TODO, createNewShareTodoItem())
-                    setFragmentResult(NEW_SHARE_TODO_REQUEST, bundle)
+                    bundle.putParcelable(Const.NEW_SHARE_TODO, createNewShareTodoItem())
+                    setFragmentResult(Const.NEW_SHARE_TODO_REQUEST, bundle)
                     findNavController().navigate(R.id.action_newShareTodoFragment_to_shareTodoFragment)
                 } else {
                     edTitle.error = getString(R.string.empty_filed)
@@ -60,17 +59,17 @@ class NewShareTodoFragment : Fragment() {
             return ShareTodoItem(
                 binding.edTitle.text.toString(),
                 binding.edDescription.text.toString(),
-                getTime(),
+                TimeManager.getTime(),
                 false,
-                user.displayName.toString(),
+                user.displayName.toString()
             )
         } else {
             return ShareTodoItem(
                 binding.edTitle.text.toString(),
                 binding.edDescription.text.toString(),
-                getTime(),
+                TimeManager.getTime(),
                 false,
-                getString(R.string.not_authorized),
+                getString(R.string.not_authorized)
             )
         }
     }

@@ -10,10 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentNewShopListItemBinding
 import com.chilcotin.familyapp.entity.ShopListItem
-import com.chilcotin.familyapp.utils.Const.NEW_SHOP_LIST_ITEM
-import com.chilcotin.familyapp.utils.Const.NEW_SHOP_LIST_ITEM_REQUEST
-import com.chilcotin.familyapp.utils.InputManager.showSoftKeyboard
-import com.chilcotin.familyapp.utils.TimeManager.getTime
+import com.chilcotin.familyapp.utils.Const
+import com.chilcotin.familyapp.utils.InputManager
+import com.chilcotin.familyapp.utils.TimeManager
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,13 +34,13 @@ class NewShopListItemFragment : Fragment() {
 
         binding.apply {
             edTitle.requestFocus()
-            showSoftKeyboard(edTitle, requireContext())
+            InputManager.showSoftKeyboard(edTitle, requireContext())
 
             fbOkShopListItem.setOnClickListener {
                 if (edTitle.text.isNotEmpty()) {
                     val bundle = Bundle()
-                    bundle.putParcelable(NEW_SHOP_LIST_ITEM, createNewShopListItem())
-                    setFragmentResult(NEW_SHOP_LIST_ITEM_REQUEST, bundle)
+                    bundle.putParcelable(Const.NEW_SHOP_LIST_ITEM, createNewShopListItem())
+                    setFragmentResult(Const.NEW_SHOP_LIST_ITEM_REQUEST, bundle)
                     findNavController().navigate(R.id.action_newShopListItemFragment_to_shopListFragment)
                 } else {
                     edTitle.error = getString(R.string.empty_filed)
@@ -60,13 +59,13 @@ class NewShopListItemFragment : Fragment() {
         return if (user != null) {
             ShopListItem(
                 binding.edTitle.text.toString(),
-                getTime(),
+                TimeManager.getTime(),
                 user.displayName.toString(),
             )
         } else {
             ShopListItem(
                 binding.edTitle.text.toString(),
-                getTime(),
+                TimeManager.getTime(),
                 getString(R.string.not_authorized),
             )
         }

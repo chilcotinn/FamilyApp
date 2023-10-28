@@ -17,8 +17,7 @@ import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.adapters.ShopListAdapter
 import com.chilcotin.familyapp.databinding.FragmentShopListBinding
 import com.chilcotin.familyapp.entity.ShopListItem
-import com.chilcotin.familyapp.utils.Const.NEW_SHOP_LIST_ITEM
-import com.chilcotin.familyapp.utils.Const.NEW_SHOP_LIST_ITEM_REQUEST
+import com.chilcotin.familyapp.utils.Const
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,13 +35,14 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setFragmentResultListener(NEW_SHOP_LIST_ITEM_REQUEST) { _, bundle ->
+        setFragmentResultListener(Const.NEW_SHOP_LIST_ITEM_REQUEST) { _, bundle ->
             val result: ShopListItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getParcelable(NEW_SHOP_LIST_ITEM, ShopListItem::class.java)
+                bundle.getParcelable(Const.NEW_SHOP_LIST_ITEM, ShopListItem::class.java)
                     ?: ShopListItem(getString(R.string.error))
             } else {
                 @Suppress("DEPRECATION")
-                bundle.getParcelable(NEW_SHOP_LIST_ITEM) ?: ShopListItem(getString(R.string.error))
+                bundle.getParcelable(Const.NEW_SHOP_LIST_ITEM)
+                    ?: ShopListItem(getString(R.string.error))
             }
             mainViewModel.insertShopListItem(result)
         }
