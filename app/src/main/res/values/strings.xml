@@ -32,7 +32,7 @@
     <string name="done">Done</string>
     <string name="update_date">Update date</string>
     <string name="error">Error</string>
-    <string name="delete">Delete</string>
+    <string name="delete">Delete?</string>
     <string name="ok">OК</string>
     <string name="cancel">Cancel</string>
 </resources>

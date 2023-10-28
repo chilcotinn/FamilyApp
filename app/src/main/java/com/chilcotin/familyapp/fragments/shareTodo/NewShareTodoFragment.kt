@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
@@ -13,6 +12,7 @@ import com.chilcotin.familyapp.databinding.FragmentNewShareTodoBinding
 import com.chilcotin.familyapp.entity.ShareTodoItem
 import com.chilcotin.familyapp.utils.Const.NEW_SHARE_TODO
 import com.chilcotin.familyapp.utils.Const.NEW_SHARE_TODO_REQUEST
+import com.chilcotin.familyapp.utils.InputManager.showSoftKeyboard
 import com.chilcotin.familyapp.utils.TimeManager.getTime
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,17 +34,17 @@ class NewShareTodoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             edTitle.requestFocus()
-            showSoftKeyboard(edTitle)
-        }
+            showSoftKeyboard(edTitle, requireContext())
 
-        binding.fbOkTask.setOnClickListener {
-            if (binding.edTitle.text.isNotEmpty()) {
-                val bundle = Bundle()
-                bundle.putParcelable(NEW_SHARE_TODO, createNewShareTodoItem())
-                setFragmentResult(NEW_SHARE_TODO_REQUEST, bundle)
-                findNavController().navigate(R.id.action_newShareTodoFragment_to_shareTodoFragment)
-            } else {
-                binding.edTitle.error = getString(R.string.empty_filed)
+            fbOkTask.setOnClickListener {
+                if (edTitle.text.isNotEmpty()) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(NEW_SHARE_TODO, createNewShareTodoItem())
+                    setFragmentResult(NEW_SHARE_TODO_REQUEST, bundle)
+                    findNavController().navigate(R.id.action_newShareTodoFragment_to_shareTodoFragment)
+                } else {
+                    edTitle.error = getString(R.string.empty_filed)
+                }
             }
         }
     }
@@ -72,13 +72,6 @@ class NewShareTodoFragment : Fragment() {
                 false,
                 getString(R.string.not_authorized),
             )
-        }
-    }
-
-    private fun showSoftKeyboard(view: View) {
-        if (view.requestFocus()) {
-            val imm = context?.getSystemService(InputMethodManager::class.java)
-            imm?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
         }
     }
 }

@@ -38,11 +38,13 @@ class SettingsFragment : Fragment() {
 
         checkAuthState()
 
-        binding.btGoogleLogin.setOnClickListener {
-            signInLauncher.launch(Authorization().signInIntent())
-        }
-        binding.btLogout.setOnClickListener {
-            signOut()
+        binding.apply {
+            btGoogleLogin.setOnClickListener {
+                signInLauncher.launch(Authorization().signInIntent())
+            }
+            btLogout.setOnClickListener {
+                signOut()
+            }
         }
     }
 

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
@@ -13,6 +12,7 @@ import com.chilcotin.familyapp.databinding.FragmentNewShopListItemBinding
 import com.chilcotin.familyapp.entity.ShopListItem
 import com.chilcotin.familyapp.utils.Const.NEW_SHOP_LIST_ITEM
 import com.chilcotin.familyapp.utils.Const.NEW_SHOP_LIST_ITEM_REQUEST
+import com.chilcotin.familyapp.utils.InputManager.showSoftKeyboard
 import com.chilcotin.familyapp.utils.TimeManager.getTime
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,17 +35,17 @@ class NewShopListItemFragment : Fragment() {
 
         binding.apply {
             edTitle.requestFocus()
-            showSoftKeyboard(edTitle)
-        }
+            showSoftKeyboard(edTitle, requireContext())
 
-        binding.fbOkShopListItem.setOnClickListener {
-            if (binding.edTitle.text.isNotEmpty()) {
-                val bundle = Bundle()
-                bundle.putParcelable(NEW_SHOP_LIST_ITEM, createNewShopListItem())
-                setFragmentResult(NEW_SHOP_LIST_ITEM_REQUEST, bundle)
-                findNavController().navigate(R.id.action_newShopListItemFragment_to_shopListFragment)
-            } else {
-                binding.edTitle.error = getString(R.string.empty_filed)
+            fbOkShopListItem.setOnClickListener {
+                if (edTitle.text.isNotEmpty()) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(NEW_SHOP_LIST_ITEM, createNewShopListItem())
+                    setFragmentResult(NEW_SHOP_LIST_ITEM_REQUEST, bundle)
+                    findNavController().navigate(R.id.action_newShopListItemFragment_to_shopListFragment)
+                } else {
+                    edTitle.error = getString(R.string.empty_filed)
+                }
             }
         }
     }
@@ -57,25 +57,18 @@ class NewShopListItemFragment : Fragment() {
 
     private fun createNewShopListItem(): ShopListItem {
         val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            return ShopListItem(
+        return if (user != null) {
+            ShopListItem(
                 binding.edTitle.text.toString(),
                 getTime(),
                 user.displayName.toString(),
             )
         } else {
-            return ShopListItem(
+            ShopListItem(
                 binding.edTitle.text.toString(),
                 getTime(),
                 getString(R.string.not_authorized),
             )
-        }
-    }
-
-    private fun showSoftKeyboard(view: View) {
-        if (view.requestFocus()) {
-            val imm = context?.getSystemService(InputMethodManager::class.java)
-            imm?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
         }
     }
 }
