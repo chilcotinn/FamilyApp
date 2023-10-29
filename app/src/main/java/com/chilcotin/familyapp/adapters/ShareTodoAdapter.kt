@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.chilcotin.familyapp.databinding.ShareTodoItemBinding
-import com.chilcotin.familyapp.entity.ShareTodoItem
+import com.chilcotin.familyapp.entities.ShareTodoItem
 
 class ShareTodoAdapter(private val listener: OnItemClickListener) :
     ListAdapter<ShareTodoItem, ShareTodoAdapter.ShareTodoViewHolder>(ItemComparator()) {

@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.FragmentEditTodoBinding
-import com.chilcotin.familyapp.entity.TodoItem
+import com.chilcotin.familyapp.entities.TodoItem
 import com.chilcotin.familyapp.utils.Const
 import com.chilcotin.familyapp.utils.TimeManager
 import com.chilcotin.familyapp.viewmodel.MainViewModel

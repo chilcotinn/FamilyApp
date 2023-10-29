@@ -6,9 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.chilcotin.familyapp.entity.ShareTodoItem
-import com.chilcotin.familyapp.entity.ShopListItem
-import com.chilcotin.familyapp.entity.TodoItem
+import com.chilcotin.familyapp.entities.ShareTodoItem
+import com.chilcotin.familyapp.entities.ShopListItem
+import com.chilcotin.familyapp.entities.TodoItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao

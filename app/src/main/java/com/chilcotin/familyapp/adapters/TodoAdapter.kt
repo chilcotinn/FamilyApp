@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.chilcotin.familyapp.databinding.TodoItemBinding
-import com.chilcotin.familyapp.entity.TodoItem
+import com.chilcotin.familyapp.entities.TodoItem
 
 class TodoAdapter(private val listener: OnItemClickListener) :
     ListAdapter<TodoItem, TodoAdapter.TodoViewHolder>(ItemComparator()) {

@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chilcotin.familyapp.db.MainDb
-import com.chilcotin.familyapp.entity.ShareTodoItem
-import com.chilcotin.familyapp.entity.ShopListItem
-import com.chilcotin.familyapp.entity.TodoItem
+import com.chilcotin.familyapp.entities.ShareTodoItem
+import com.chilcotin.familyapp.entities.ShopListItem
+import com.chilcotin.familyapp.entities.TodoItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow

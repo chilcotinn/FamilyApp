@@ -16,7 +16,7 @@ import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.adapters.ShopListAdapter
 import com.chilcotin.familyapp.databinding.FragmentShopListBinding
-import com.chilcotin.familyapp.entity.ShopListItem
+import com.chilcotin.familyapp.entities.ShopListItem
 import com.chilcotin.familyapp.utils.Const
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint

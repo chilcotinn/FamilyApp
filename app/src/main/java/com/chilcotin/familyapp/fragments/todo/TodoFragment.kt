@@ -22,7 +22,7 @@ import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.adapters.TodoAdapter
 import com.chilcotin.familyapp.databinding.FragmentTodoBinding
-import com.chilcotin.familyapp.entity.TodoItem
+import com.chilcotin.familyapp.entities.TodoItem
 import com.chilcotin.familyapp.utils.Const
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar

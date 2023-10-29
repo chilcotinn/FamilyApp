@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.ShopListItemBinding
-import com.chilcotin.familyapp.entity.ShopListItem
+import com.chilcotin.familyapp.entities.ShopListItem
 
 class ShopListAdapter(private val listener: OnItemClickListener) :
     ListAdapter<ShopListItem, ShopListAdapter.ShopListViewHolder>(ItemComparator()) {
