@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b335ade6e6aa89f20b8adeef13f4dbec",
+    "identityHash": "71ccdfab9694be3685889c73cfc66aa2",
     "entities": [
       {
         "tableName": "todo_list",
@@ -150,7 +150,7 @@
       },
       {
         "tableName": "shop_list",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `isChecked` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `isChecked` INTEGER NOT NULL, `listId` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "title",
@@ -161,6 +161,12 @@
           {
             "fieldPath": "isChecked",
             "columnName": "isChecked",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "listId",
+            "columnName": "listId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -184,7 +190,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b335ade6e6aa89f20b8adeef13f4dbec')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '71ccdfab9694be3685889c73cfc66aa2')"
     ]
   }
 }

@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:autofillHints="no"
         android:ems="10"
-        android:hint="@string/add_new_shop_list_item"
+        android:hint="@string/title"
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="@dimen/edit_text_size"
