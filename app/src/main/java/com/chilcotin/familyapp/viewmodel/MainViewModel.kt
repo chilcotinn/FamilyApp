@@ -92,12 +92,17 @@ class MainViewModel @Inject constructor(
         mainDb.getDao().deleteShopListItem(item)
     }
 
+    fun onShopListItemSelected(item: ShopListItem) = viewModelScope.launch {
+        itemEventChannel.send(ItemEvent.NavigateToShopItemsScreen(item))
+    }
+
 
     sealed class ItemEvent {
         data class ShowUndoDeleteTodoItemMessage(val todoItem: TodoItem) : ItemEvent()
         data class NavigateToEditTodoItemScreen(val todoItem: TodoItem) : ItemEvent()
         data class ShowUndoDeleteShareTodoItemMessage(val shareTodoItem: ShareTodoItem) : ItemEvent()
         data class NavigateToEditShareTodoItemScreen(val shareTodoItem: ShareTodoItem) : ItemEvent()
+        data class NavigateToShopItemsScreen(val shopListItem: ShopListItem) : ItemEvent()
     }
 
 

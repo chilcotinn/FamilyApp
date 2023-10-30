@@ -3,13 +3,18 @@ package com.chilcotin.familyapp.fragments.shopList
 import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chilcotin.familyapp.App
@@ -65,6 +70,25 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
         binding.fbAddShopList.setOnClickListener {
             findNavController().navigate(R.id.action_shopListFragment_to_newShopListItemFragment)
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.itemEvent.collect() { event ->
+                    when (event) {
+                        is MainViewModel.ItemEvent.NavigateToShopItemsScreen -> {
+                            val bundle = Bundle()
+                            bundle.putParcelable(Const.PUT_SHOP_LIST_ITEM, event.shopListItem)
+                            setFragmentResult(Const.PUT_SHOP_LIST_ITEM_REQUEST, bundle)
+                            findNavController().navigate(R.id.action_shopListFragment_to_shopItemsFragment)
+                        }
+
+                        else -> {
+                            Log.d("MyLog", getString(R.string.error))
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -102,6 +126,7 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(shopListItem: ShopListItem) {
+        mainViewModel.onShopListItemSelected(shopListItem)
     }
 
     override fun deleteItem(shopListItem: ShopListItem) {
