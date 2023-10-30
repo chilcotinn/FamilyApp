@@ -23,6 +23,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/edDescription"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:autofillHints="no"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="@string/description"
+        android:inputType="text|textMultiLine"
+        android:textColor="@color/black"
+        android:textSize="@dimen/edit_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edTitle"
+        app:layout_constraintStart_toStartOf="@+id/edTitle"
+        app:layout_constraintTop_toBottomOf="@+id/edTitle" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fbOkShopListItem"
         android:layout_width="wrap_content"

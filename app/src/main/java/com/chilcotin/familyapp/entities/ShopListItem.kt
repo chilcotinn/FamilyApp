@@ -13,6 +13,9 @@ data class ShopListItem(
     @ColumnInfo(name = "title")
     val title: String,
 
+    @ColumnInfo(name = "description")
+    val description: String = "",
+
     @ColumnInfo(name = "time")
     val time: String = "",
 

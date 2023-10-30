@@ -59,12 +59,14 @@ class NewShopListItemFragment : Fragment() {
         return if (user != null) {
             ShopListItem(
                 binding.edTitle.text.toString(),
+                binding.edDescription.text.toString(),
                 TimeManager.getTime(),
                 user.displayName.toString(),
             )
         } else {
             ShopListItem(
                 binding.edTitle.text.toString(),
+                binding.edDescription.text.toString(),
                 TimeManager.getTime(),
                 getString(R.string.not_authorized),
             )

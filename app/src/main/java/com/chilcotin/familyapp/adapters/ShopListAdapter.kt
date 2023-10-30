@@ -3,6 +3,7 @@ package com.chilcotin.familyapp.adapters
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -34,6 +35,7 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
         fun setData(shopListItem: ShopListItem) {
             binding.apply {
                 tvTitle.text = shopListItem.title
+                tvDescription.text = shopListItem.description
                 tvTime.text = shopListItem.time
                 tvCreator.text = shopListItem.creator
                 val counterText =
@@ -49,6 +51,10 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
                         )
                     )
                 progressBar.progressTintList = colorState
+
+                if (tvDescription.text.isEmpty()) {
+                    tvDescription.visibility = View.GONE
+                }
 
                 itemView.setOnClickListener {
                     listener.onItemClick(shopListItem)
