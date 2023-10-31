@@ -7,6 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.chilcotin.familyapp.db.MainDb
 import com.chilcotin.familyapp.entities.ShareTodoItem
+import com.chilcotin.familyapp.entities.ShopItem
 import com.chilcotin.familyapp.entities.ShopListItem
 import com.chilcotin.familyapp.entities.TodoItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -97,10 +98,29 @@ class MainViewModel @Inject constructor(
     }
 
 
+    fun getAllShopItem(listId: Int): LiveData<List<ShopItem>> =
+        mainDb.getDao().getAllShopItem(listId).asLiveData()
+
+    fun insertShopItem(item: ShopItem) = viewModelScope.launch {
+        mainDb.getDao().insertShopItem(item)
+    }
+
+    fun deleteShopItem(item: ShopItem) = viewModelScope.launch {
+        mainDb.getDao().deleteShopItem(item)
+    }
+
+    fun onShopItemCheckedChanged(item: ShopItem, isChecked: Boolean) =
+        viewModelScope.launch {
+            mainDb.getDao().updateShopItem(item.copy(isChecked = isChecked))
+        }
+
+
     sealed class ItemEvent {
         data class ShowUndoDeleteTodoItemMessage(val todoItem: TodoItem) : ItemEvent()
         data class NavigateToEditTodoItemScreen(val todoItem: TodoItem) : ItemEvent()
-        data class ShowUndoDeleteShareTodoItemMessage(val shareTodoItem: ShareTodoItem) : ItemEvent()
+        data class ShowUndoDeleteShareTodoItemMessage(val shareTodoItem: ShareTodoItem) :
+            ItemEvent()
+
         data class NavigateToEditShareTodoItemScreen(val shareTodoItem: ShareTodoItem) : ItemEvent()
         data class NavigateToShopItemsScreen(val shopListItem: ShopListItem) : ItemEvent()
     }

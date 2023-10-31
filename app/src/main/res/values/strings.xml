@@ -35,4 +35,5 @@
     <string name="delete">Delete?</string>
     <string name="ok">OК</string>
     <string name="cancel">Cancel</string>
+    <string name="shop_item">Shop item</string>
 </resources>
