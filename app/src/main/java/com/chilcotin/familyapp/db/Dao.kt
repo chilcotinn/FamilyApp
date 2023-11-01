@@ -51,7 +51,7 @@ interface Dao {
     suspend fun deleteShopListItem(item: ShopListItem)
 
 
-    @Query("SELECT * FROM shop_list WHERE listId LIKE :listId")
+    @Query("SELECT * FROM shop_list WHERE listId = :listId")
     fun getAllShopItem(listId: Int): Flow<List<ShopItem>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chilcotin.familyapp.App
 import com.chilcotin.familyapp.adapters.ShopItemAdapter
@@ -13,12 +15,15 @@ import com.chilcotin.familyapp.databinding.FragmentShopItemsBinding
 import com.chilcotin.familyapp.entities.ShopItem
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
     private var _binding: FragmentShopItemsBinding? = null
     private val binding get() = _binding!!
     private val adapter by lazy { ShopItemAdapter(this) }
+    val args: ShopItemsFragmentArgs by navArgs()
+    private var shopListItemId = 0
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
@@ -35,7 +40,15 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        shopListItemId = args.shopListItemId
+
         initRcView()
+        observer()
+
+        binding.ibOk.setOnClickListener {
+            mainViewModel.insertShopItem(createNewShopItem())
+            binding.edShopItem.setText("")
+        }
     }
 
     override fun onDestroy() {
@@ -47,6 +60,22 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
         rcShopItems.layoutManager = LinearLayoutManager(requireContext())
         rcShopItems.adapter = adapter
         rcShopItems.setHasFixedSize(true)
+    }
+
+    private fun observer() {
+        lifecycle.coroutineScope.launch {
+            mainViewModel.getAllShopItem(shopListItemId).observe(viewLifecycleOwner) {
+                adapter.submitList(it)
+            }
+        }
+    }
+
+    private fun createNewShopItem(): ShopItem {
+        return ShopItem(
+            binding.edShopItem.text.toString(),
+            false,
+            shopListItemId
+        )
     }
 
     override fun onCheckedBoxClick(shopItem: ShopItem, isChecked: Boolean) {

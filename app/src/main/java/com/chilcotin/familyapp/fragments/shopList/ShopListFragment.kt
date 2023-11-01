@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
@@ -76,10 +75,11 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
                 mainViewModel.itemEvent.collect() { event ->
                     when (event) {
                         is MainViewModel.ItemEvent.NavigateToShopItemsScreen -> {
-                            val bundle = Bundle()
-                            bundle.putParcelable(Const.PUT_SHOP_LIST_ITEM, event.shopListItem)
-                            setFragmentResult(Const.PUT_SHOP_LIST_ITEM_REQUEST, bundle)
-                            findNavController().navigate(R.id.action_shopListFragment_to_shopItemsFragment)
+                            val action =
+                                ShopListFragmentDirections.actionShopListFragmentToShopItemsFragment(
+                                    event.shopListItem.id
+                                )
+                            findNavController().navigate(action)
                         }
 
                         else -> {

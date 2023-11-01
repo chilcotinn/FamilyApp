@@ -118,13 +118,10 @@ class MainViewModel @Inject constructor(
     sealed class ItemEvent {
         data class ShowUndoDeleteTodoItemMessage(val todoItem: TodoItem) : ItemEvent()
         data class NavigateToEditTodoItemScreen(val todoItem: TodoItem) : ItemEvent()
-        data class ShowUndoDeleteShareTodoItemMessage(val shareTodoItem: ShareTodoItem) :
-            ItemEvent()
-
+        data class ShowUndoDeleteShareTodoItemMessage(val shareTodoItem: ShareTodoItem) : ItemEvent()
         data class NavigateToEditShareTodoItemScreen(val shareTodoItem: ShareTodoItem) : ItemEvent()
         data class NavigateToShopItemsScreen(val shopListItem: ShopListItem) : ItemEvent()
     }
-
 
     class MainViewModelFactory(private val mainDb: MainDb) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

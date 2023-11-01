@@ -13,6 +13,4 @@ object Const {
 
     const val NEW_SHOP_LIST_ITEM = "new_shop_list_item"
     const val NEW_SHOP_LIST_ITEM_REQUEST = "new_shop_list_item_request"
-    const val PUT_SHOP_LIST_ITEM = "put_shop_list_item"
-    const val PUT_SHOP_LIST_ITEM_REQUEST = "put_shop_list_item_request"
 }
