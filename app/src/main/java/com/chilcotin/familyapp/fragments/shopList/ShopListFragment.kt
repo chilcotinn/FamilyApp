@@ -72,7 +72,7 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainViewModel.itemEvent.collect() { event ->
+                mainViewModel.itemEvent.collect { event ->
                     when (event) {
                         is MainViewModel.ItemEvent.NavigateToShopItemsScreen -> {
                             val action =

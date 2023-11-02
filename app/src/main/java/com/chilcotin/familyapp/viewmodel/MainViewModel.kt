@@ -107,13 +107,16 @@ class MainViewModel @Inject constructor(
 
     fun deleteShopItem(item: ShopItem) = viewModelScope.launch {
         mainDb.getDao().deleteShopItem(item)
+        itemEventChannel.send(ItemEvent.ShowUndoDeleteShopItemMessage(item))
     }
 
-    fun onShopItemCheckedChanged(item: ShopItem, isChecked: Boolean) =
-        viewModelScope.launch {
-            mainDb.getDao().updateShopItem(item.copy(isChecked = isChecked))
-        }
+    fun onShopItemCheckedChanged(item: ShopItem, isChecked: Boolean) = viewModelScope.launch {
+        mainDb.getDao().updateShopItem(item.copy(isChecked = isChecked))
+    }
 
+    fun onShopItemUndoDeleteClick(item: ShopItem) = viewModelScope.launch {
+        mainDb.getDao().insertShopItem(item)
+    }
 
     sealed class ItemEvent {
         data class ShowUndoDeleteTodoItemMessage(val todoItem: TodoItem) : ItemEvent()
@@ -121,6 +124,7 @@ class MainViewModel @Inject constructor(
         data class ShowUndoDeleteShareTodoItemMessage(val shareTodoItem: ShareTodoItem) : ItemEvent()
         data class NavigateToEditShareTodoItemScreen(val shareTodoItem: ShareTodoItem) : ItemEvent()
         data class NavigateToShopItemsScreen(val shopListItem: ShopListItem) : ItemEvent()
+        data class ShowUndoDeleteShopItemMessage(val shopItem: ShopItem) : ItemEvent()
     }
 
     class MainViewModelFactory(private val mainDb: MainDb) : ViewModelProvider.Factory {
