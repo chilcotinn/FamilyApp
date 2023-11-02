@@ -117,6 +117,7 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
 
         dialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok)) { _, _ ->
             mainViewModel.deleteShopListItem(item)
+            mainViewModel.deleteShopItemById(item.id)
             dialog.dismiss()
         }
         dialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel)) { _, _ ->

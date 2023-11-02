@@ -118,6 +118,10 @@ class MainViewModel @Inject constructor(
         mainDb.getDao().insertShopItem(item)
     }
 
+    fun deleteShopItemById(listId: Int) = viewModelScope.launch {
+        mainDb.getDao().deleteShopItemById(listId)
+    }
+
     sealed class ItemEvent {
         data class ShowUndoDeleteTodoItemMessage(val todoItem: TodoItem) : ItemEvent()
         data class NavigateToEditTodoItemScreen(val todoItem: TodoItem) : ItemEvent()
