@@ -30,6 +30,7 @@ class ShopItemAdapter(private val listener: OnItemClickListener) :
         fun setData(shopItem: ShopItem) {
             binding.apply {
                 tvTitle.text = shopItem.title
+                tvTitle.paint.isStrikeThruText = shopItem.isChecked
                 checkBox.isChecked = shopItem.isChecked
             }
         }

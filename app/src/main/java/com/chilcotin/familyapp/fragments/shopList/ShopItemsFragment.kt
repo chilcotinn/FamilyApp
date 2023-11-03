@@ -130,5 +130,6 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
     }
 
     override fun onCheckedBoxClick(shopItem: ShopItem, isChecked: Boolean) {
+        mainViewModel.onShopItemCheckedChanged(shopItem, isChecked)
     }
 }
