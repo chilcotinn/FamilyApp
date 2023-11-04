@@ -41,9 +41,11 @@ class TodoAdapter(private val listener: OnItemClickListener) :
                 tvDescription.text = todoItem.description
                 tvTime.text = todoItem.time
                 checkBox.isChecked = todoItem.isChecked
-                
+
                 if (tvDescription.text.isEmpty()) {
                     tvDescription.visibility = View.GONE
+                } else {
+                    tvDescription.visibility = View.VISIBLE
                 }
             }
         }

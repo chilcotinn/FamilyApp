@@ -46,6 +46,8 @@ class ShareTodoAdapter(private val listener: OnItemClickListener) :
 
                 if (tvDescription.text.isEmpty()) {
                     tvDescription.visibility = View.GONE
+                } else {
+                    tvDescription.visibility = View.VISIBLE
                 }
             }
         }
