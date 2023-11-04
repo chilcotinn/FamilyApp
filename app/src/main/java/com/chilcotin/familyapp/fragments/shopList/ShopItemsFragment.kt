@@ -53,9 +53,15 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
         val itemTouchHelperCallback = createItemTouchHelper()
         itemTouchHelperCallback.attachToRecyclerView(binding.rcShopItems)
 
-        binding.ibOk.setOnClickListener {
-            mainViewModel.insertShopItem(createNewShopItem())
-            binding.edShopItem.setText("")
+        binding.apply {
+            ibOk.setOnClickListener {
+                if (edShopItem.text.isNotEmpty()) {
+                    mainViewModel.insertShopItem(createNewShopItem())
+                    edShopItem.setText("")
+                } else {
+                    edShopItem.error = getString(R.string.empty_filed)
+                }
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

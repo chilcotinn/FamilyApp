@@ -1,6 +1,7 @@
 package com.chilcotin.familyapp.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -40,6 +41,10 @@ class TodoAdapter(private val listener: OnItemClickListener) :
                 tvDescription.text = todoItem.description
                 tvTime.text = todoItem.time
                 checkBox.isChecked = todoItem.isChecked
+                
+                if (tvDescription.text.isEmpty()) {
+                    tvDescription.visibility = View.GONE
+                }
             }
         }
     }
