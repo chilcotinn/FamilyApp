@@ -36,14 +36,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:gravity="start"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/checkBox"
             app:layout_constraintStart_toStartOf="@+id/tvTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvTime"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:text="Description Description Descriptiof f daa af af aga dg" />
 
         <TextView
@@ -51,11 +49,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:textColor="@color/black"
             android:textSize="@dimen/date_time"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/tvTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvDescription"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescription"
             tools:text="18:57 19.04" />
 
         <CheckBox
@@ -71,10 +71,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="@dimen/creator"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tvTime"
-            app:layout_constraintEnd_toEndOf="@+id/checkBox"
+            app:layout_constraintEnd_toEndOf="@+id/tvDescription"
             app:layout_constraintTop_toTopOf="@+id/tvTime"
             tools:text="Ivan Petrov" />
     </androidx.constraintlayout.widget.ConstraintLayout>

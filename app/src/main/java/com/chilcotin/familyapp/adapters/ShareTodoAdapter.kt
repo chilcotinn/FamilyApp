@@ -1,7 +1,6 @@
 package com.chilcotin.familyapp.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -43,10 +42,6 @@ class ShareTodoAdapter(private val listener: OnItemClickListener) :
                 tvTime.text = shareTodoItem.time
                 checkBox.isChecked = shareTodoItem.isChecked
                 tvCreator.text = shareTodoItem.creator
-
-                if (tvDescription.text.isEmpty()) {
-                    tvDescription.visibility = View.GONE
-                }
             }
         }
     }
