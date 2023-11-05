@@ -20,20 +20,23 @@
     <string name="not_authorized">User is not authorized</string>
     <string name="sign_out_done">Sign out done</string>
     <string name="sign_in_done">Sign in done</string>
-    <!-- Other -->
-    <string name="background">Background</string>
-    <string name="add_new_note">Add new note</string>
-    <string name="add_new_share_note">Add new share note</string>
-    <string name="add_new_shop_list_item">Add new shop list item</string>
+    <!-- Note -->
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="empty_filed">Empty field</string>
-    <string name="error_todo">Error Todo task</string>
-    <string name="done">Done</string>
-    <string name="update_date">Update date</string>
-    <string name="error">Error</string>
+    <string name="add_new_note">Add new note</string>
+    <string name="add_new_share_note">Add new share note</string>
+    <string name="add_new_shop_list_item">Add new shop list item</string>
+    <!-- Other action -->
     <string name="delete">Delete?</string>
     <string name="ok">OК</string>
     <string name="cancel">Cancel</string>
+    <string name="update_date">Update date</string>
+    <!-- Result -->
+    <string name="done">Done</string>
+    <string name="error">Error</string>
+    <string name="error_todo">Error Todo task</string>
+    <!-- Other -->
+    <string name="background">Background</string>
     <string name="shop_item">Shop item</string>
 </resources>

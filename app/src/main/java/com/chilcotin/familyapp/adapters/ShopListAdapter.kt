@@ -38,9 +38,6 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
                 tvDescription.text = shopListItem.description
                 tvTime.text = shopListItem.time
                 tvCreator.text = shopListItem.creator
-                val counterText =
-                    "${shopListItem.checkedItemsCounter}/${shopListItem.allItemsCounter}"
-                tvCounter.text = counterText
                 progressBar.max = shopListItem.allItemsCounter
                 progressBar.progress = shopListItem.checkedItemsCounter
                 val colorState =

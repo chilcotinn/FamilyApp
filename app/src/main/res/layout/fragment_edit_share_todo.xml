@@ -16,6 +16,7 @@
         android:ems="10"
         android:hint="@string/title"
         android:inputType="text"
+        android:maxLength="25"
         android:textColor="@color/black"
         android:textSize="@dimen/edit_text_size"
         app:layout_constraintEnd_toEndOf="parent"
