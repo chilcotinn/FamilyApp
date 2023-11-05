@@ -1,5 +1,4 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="Base.Theme.FamilyApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorPrimary">@color/blue</item>
@@ -7,7 +6,6 @@
         <item name="colorPrimaryVariant">@color/blue</item>
         <item name="colorAccent">@color/blue</item>
         <item name="android:statusBarColor">@color/black</item>
-
     </style>
 
     <style name="Theme.FamilyApp" parent="Base.Theme.FamilyApp" />

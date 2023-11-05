@@ -2,10 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="blue">#2196F3</color>
-    <color name="rippleBottomBar">#7011B5F4</color>
-    <color name="rippleFloatingButton">#11F4EC</color>
-    <color name="backgroundTodo">#CC11BFF4</color>
     <color name="red">#CCFB0606</color>
     <color name="green">#CC0FE400</color>
+    <color name="blue">#2196F3</color>
+    <color name="backgroundTodo">#CC11BFF4</color>
+    <color name="rippleBottomBar">#7011B5F4</color>
+    <color name="rippleFloatingButton">#11F4EC</color>
 </resources>
