@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1d88592c60de93be5bcd64d8fbf9fc7e",
+    "identityHash": "370bc21268a42d6687f34e6ff0d81e1a",
     "entities": [
       {
         "tableName": "todo_list",
@@ -100,7 +100,7 @@
       },
       {
         "tableName": "shop_list_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `time` TEXT NOT NULL, `creator` TEXT NOT NULL, `allItemsCounter` INTEGER NOT NULL, `checkedItemsCounter` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `time` TEXT NOT NULL, `creator` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "title",
@@ -124,18 +124,6 @@
             "fieldPath": "creator",
             "columnName": "creator",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "allItemsCounter",
-            "columnName": "allItemsCounter",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "checkedItemsCounter",
-            "columnName": "checkedItemsCounter",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -196,7 +184,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1d88592c60de93be5bcd64d8fbf9fc7e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '370bc21268a42d6687f34e6ff0d81e1a')"
     ]
   }
 }

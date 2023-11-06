@@ -22,12 +22,6 @@ data class ShopListItem(
     @ColumnInfo(name = "creator")
     val creator: String = "",
 
-    @ColumnInfo(name = "allItemsCounter")
-    val allItemsCounter: Int = 0,
-
-    @ColumnInfo(name = "checkedItemsCounter")
-    val checkedItemsCounter: Int = 0,
-
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 ) : Parcelable

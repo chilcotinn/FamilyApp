@@ -1,16 +1,12 @@
 package com.chilcotin.familyapp.adapters
 
-import android.content.Context
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.ShopListItemBinding
 import com.chilcotin.familyapp.entities.ShopListItem
 
@@ -38,16 +34,6 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
                 tvDescription.text = shopListItem.description
                 tvTime.text = shopListItem.time
                 tvCreator.text = shopListItem.creator
-                progressBar.max = shopListItem.allItemsCounter
-                progressBar.progress = shopListItem.checkedItemsCounter
-                val colorState =
-                    ColorStateList.valueOf(
-                        getProgressColorState(
-                            shopListItem,
-                            binding.root.context
-                        )
-                    )
-                progressBar.progressTintList = colorState
 
                 if (tvDescription.text.isEmpty()) {
                     tvDescription.visibility = View.GONE
@@ -59,14 +45,6 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
                 ibDelete.setOnClickListener {
                     listener.deleteItem(shopListItem)
                 }
-            }
-        }
-
-        private fun getProgressColorState(shopListItem: ShopListItem, context: Context): Int {
-            return if (shopListItem.checkedItemsCounter == shopListItem.allItemsCounter) {
-                ContextCompat.getColor(context, R.color.green)
-            } else {
-                ContextCompat.getColor(context, R.color.red)
             }
         }
     }
