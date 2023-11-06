@@ -39,4 +39,5 @@
     <!-- Other -->
     <string name="background">Background</string>
     <string name="shop_item">Shop item</string>
+    <string name="message">Message</string>
 </resources>
