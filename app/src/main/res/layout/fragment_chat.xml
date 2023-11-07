@@ -27,12 +27,12 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:hint="@string/message"
+        android:importantForAutofill="no"
         android:inputType="text"
         android:textSize="@dimen/edit_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ibOk"
-        app:layout_constraintStart_toStartOf="parent"
-        android:importantForAutofill="no" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/ibOk"
