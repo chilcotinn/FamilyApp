@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.chilcotin.familyapp.databinding.ChatItemBinding
 import com.chilcotin.familyapp.entities.ChatItem
-import com.google.firebase.auth.FirebaseAuth
 
 class ChatAdapter : ListAdapter<ChatItem, ChatAdapter.ChatViewHolder>(ItemComparator()) {
 
@@ -15,7 +14,6 @@ class ChatAdapter : ListAdapter<ChatItem, ChatAdapter.ChatViewHolder>(ItemCompar
 
         fun setData(chatItem: ChatItem) {
             binding.apply {
-                imAvatar.setImageURI(FirebaseAuth.getInstance().currentUser?.photoUrl)
                 tvCreator.text = chatItem.creator
                 tvTime.text = chatItem.time
                 tvMessage.text = chatItem.message

@@ -10,6 +10,7 @@ import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.adapters.ChatAdapter
 import com.chilcotin.familyapp.databinding.FragmentChatBinding
 import com.chilcotin.familyapp.entities.ChatItem
+import com.chilcotin.familyapp.utils.TimeManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,8 +25,6 @@ class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
     private val adapter by lazy { ChatAdapter() }
-    private val user = FirebaseAuth.getInstance().currentUser
-    private val rootPath = Firebase.database.getReference("chat")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +37,9 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val rootPath = Firebase.database.getReference("chat")
+        val user = FirebaseAuth.getInstance().currentUser
+
         initRcView()
         observer(rootPath)
 
@@ -49,7 +51,8 @@ class ChatFragment : Fragment() {
                             .setValue(
                                 ChatItem(
                                     user.displayName.toString(),
-                                    edMessage.text.toString()
+                                    edMessage.text.toString(),
+                                    TimeManager.getTime()
                                 )
                             )
                         edMessage.setText("")
@@ -59,7 +62,6 @@ class ChatFragment : Fragment() {
                 }
             } else {
                 ibOk.isClickable = false
-                edMessage.error = getString(R.string.not_authorized)
             }
         }
     }
