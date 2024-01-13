@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chilcotin.familyapp.R
@@ -37,7 +38,7 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rootPath = Firebase.database.getReference("chat")
+        val rootPath = Firebase.database.getReference(getString(R.string.root_path_chat))
         val user = FirebaseAuth.getInstance().currentUser
 
         initRcView()
@@ -90,6 +91,7 @@ class ChatFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

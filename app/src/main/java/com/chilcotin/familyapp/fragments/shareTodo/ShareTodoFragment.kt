@@ -26,6 +26,9 @@ import com.chilcotin.familyapp.entities.ShareTodoItem
 import com.chilcotin.familyapp.utils.Const
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -34,6 +37,7 @@ class ShareTodoFragment : Fragment(), ShareTodoAdapter.OnItemClickListener {
     private var _binding: FragmentShareTodoBinding? = null
     private val binding get() = _binding!!
     private val adapter by lazy { ShareTodoAdapter(this) }
+    private val user = FirebaseAuth.getInstance().currentUser
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
@@ -88,6 +92,10 @@ class ShareTodoFragment : Fragment(), ShareTodoAdapter.OnItemClickListener {
                             ).setAction(getString(R.string.undo)) {
                                 mainViewModel.onShareTodoItemUndoDeleteClick(event.shareTodoItem)
                             }.show()
+//                            if (user != null) {
+                            Firebase.database.getReference(getString(R.string.root_path_share_todo))
+                                .child(event.shareTodoItem.id.toString()).removeValue()
+//                            }
                         }
 
                         is MainViewModel.ItemEvent.NavigateToEditShareTodoItemScreen -> {
@@ -121,6 +129,22 @@ class ShareTodoFragment : Fragment(), ShareTodoAdapter.OnItemClickListener {
         lifecycle.coroutineScope.launch {
             mainViewModel.getAllShareTodoItem().observe(viewLifecycleOwner) {
                 adapter.submitList(it)
+
+//                if (user != null) {
+                for (item in it) {
+                    Firebase.database.getReference(getString(R.string.root_path_share_todo))
+                        .child(item.id.toString()).setValue(
+                            ShareTodoItem(
+                                item.title,
+                                item.description,
+                                item.time,
+                                item.isChecked,
+                                item.creator,
+                                item.id
+                            )
+                        )
+                }
+//                }
             }
         }
     }

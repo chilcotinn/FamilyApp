@@ -36,6 +36,10 @@
     <string name="done">Done</string>
     <string name="error">Error</string>
     <string name="error_todo">Error Todo task</string>
+    <!-- Firebase -->
+    <string name="root_path_chat" translatable="false">chat</string>
+    <string name="root_path_share_todo" translatable="false">shareTodo</string>
+    <string name="root_path_shop_list" translatable="false">shopList</string>
     <!-- Other -->
     <string name="background">Background</string>
     <string name="shop_item">Shop item</string>
