@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class ShopItem(
 
     @ColumnInfo(name = "title")
-    val title: String,
+    val title: String = "",
 
     @ColumnInfo(name = "isChecked")
     val isChecked: Boolean = false,

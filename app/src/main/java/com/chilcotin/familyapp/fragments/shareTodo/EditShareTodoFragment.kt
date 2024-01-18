@@ -16,13 +16,14 @@ import com.chilcotin.familyapp.entities.ShareTodoItem
 import com.chilcotin.familyapp.utils.Const
 import com.chilcotin.familyapp.utils.TimeManager
 import com.chilcotin.familyapp.viewmodel.MainViewModel
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class EditShareTodoFragment : Fragment() {
     private var _binding: FragmentEditShareTodoBinding? = null
     private val binding get() = _binding!!
-    private var idShareTodoItem = 0
     private var user = ""
 
     private val mainViewModel: MainViewModel by activityViewModels {
@@ -47,9 +48,8 @@ class EditShareTodoFragment : Fragment() {
                 edTitle.setText(result.title)
                 edDescription.setText(result.description)
                 tvTime.text = result.time
-                checkBox.isChecked = result.isChecked
+                checkBox.isChecked = result.checked
                 user = result.creator
-                idShareTodoItem = result.id
             }
         }
     }
@@ -65,6 +65,8 @@ class EditShareTodoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val rootPath = Firebase.database.getReference(getString(R.string.root_path_share_todo))
+
         binding.apply {
             fbOkTask.setOnClickListener {
                 if (edTitle.text.isEmpty()) {
@@ -77,9 +79,8 @@ class EditShareTodoFragment : Fragment() {
                                 edDescription.text.toString(),
                                 TimeManager.getTime(),
                                 checkBox.isChecked,
-                                user,
-                                idShareTodoItem
-                            )
+                                user
+                            ), rootPath
                         )
                     } else {
                         mainViewModel.updateShareTodoItem(
@@ -88,9 +89,8 @@ class EditShareTodoFragment : Fragment() {
                                 edDescription.text.toString(),
                                 tvTime.text.toString(),
                                 checkBox.isChecked,
-                                user,
-                                idShareTodoItem
-                            )
+                                user
+                            ), rootPath
                         )
                     }
                     findNavController().navigate(R.id.action_editShareTodoFragment_to_shareTodoFragment)

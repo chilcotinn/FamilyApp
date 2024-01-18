@@ -10,6 +10,8 @@ import com.chilcotin.familyapp.entities.ShareTodoItem
 import com.chilcotin.familyapp.entities.ShopItem
 import com.chilcotin.familyapp.entities.ShopListItem
 import com.chilcotin.familyapp.entities.TodoItem
+import com.chilcotin.familyapp.firebase.RealtimeDatabase
+import com.google.firebase.database.DatabaseReference
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -52,33 +54,36 @@ class MainViewModel @Inject constructor(
     }
 
 
-    fun getAllShareTodoItem(): LiveData<List<ShareTodoItem>> =
-        mainDb.getDao().getAllShareTodoItems().asLiveData()
+    fun getAllShareTodoItem() {}
 
-    fun insertShareTodoItem(item: ShareTodoItem) = viewModelScope.launch {
-        mainDb.getDao().insertShareTodoItem(item)
-    }
+    fun insertShareTodoItem(item: ShareTodoItem, rootPath: DatabaseReference) =
+        viewModelScope.launch {
+            RealtimeDatabase.insertShareTodoItem(item, rootPath)
+        }
 
-    fun updateShareTodoItem(item: ShareTodoItem) = viewModelScope.launch {
-        mainDb.getDao().updateShareTodoItem(item)
-    }
+    fun updateShareTodoItem(item: ShareTodoItem, rootPath: DatabaseReference) =
+        viewModelScope.launch {
+            RealtimeDatabase.insertShareTodoItem(item, rootPath)
+        }
 
-    fun deleteShareTodoItem(item: ShareTodoItem) = viewModelScope.launch {
-        mainDb.getDao().deleteShareTodoItem(item)
-        itemEventChannel.send(ItemEvent.ShowUndoDeleteShareTodoItemMessage(item))
-    }
+    fun deleteShareTodoItem(item: ShareTodoItem, rootPath: DatabaseReference) =
+        viewModelScope.launch {
+            RealtimeDatabase.deleteShareTodoItem(item, rootPath)
+            itemEventChannel.send(ItemEvent.ShowUndoDeleteShareTodoItemMessage(item))
+        }
 
-    fun onShareTodoItemUndoDeleteClick(item: ShareTodoItem) = viewModelScope.launch {
-        mainDb.getDao().insertShareTodoItem(item)
-    }
+    fun onShareTodoItemUndoDeleteClick(item: ShareTodoItem, rootPath: DatabaseReference) =
+        viewModelScope.launch {
+            RealtimeDatabase.insertShareTodoItem(item, rootPath)
+        }
 
     fun onShareTodoItemSelected(item: ShareTodoItem) = viewModelScope.launch {
         itemEventChannel.send(ItemEvent.NavigateToEditShareTodoItemScreen(item))
     }
 
-    fun onShareTodoItemCheckedChanged(item: ShareTodoItem, isChecked: Boolean) =
+    fun onShareTodoItemCheckedChanged(item: ShareTodoItem, rootPath: DatabaseReference) =
         viewModelScope.launch {
-            mainDb.getDao().updateShareTodoItem(item.copy(isChecked = isChecked))
+            RealtimeDatabase.insertShareTodoItem(item, rootPath)
         }
 
 

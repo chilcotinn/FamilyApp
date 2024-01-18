@@ -11,7 +11,7 @@ import kotlinx.parcelize.Parcelize
 data class ShopListItem(
 
     @ColumnInfo(name = "title")
-    val title: String,
+    val title: String = "",
 
     @ColumnInfo(name = "description")
     val description: String = "",

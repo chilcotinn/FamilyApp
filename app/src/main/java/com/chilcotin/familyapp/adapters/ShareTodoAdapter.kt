@@ -7,8 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.ShareTodoItemBinding
 import com.chilcotin.familyapp.entities.ShareTodoItem
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class ShareTodoAdapter(private val listener: OnItemClickListener) :
     ListAdapter<ShareTodoItem, ShareTodoAdapter.ShareTodoViewHolder>(ItemComparator()) {
@@ -28,8 +32,15 @@ class ShareTodoAdapter(private val listener: OnItemClickListener) :
                 checkBox.setOnClickListener {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        val shareTodoItem = getItem(position)
-                        listener.onCheckedBoxClick(shareTodoItem, checkBox.isChecked)
+                        val oldShareTodoItem = getItem(position)
+                        val newShareTodoItem =
+                            oldShareTodoItem.copy(checked = !oldShareTodoItem.checked)
+                        listener.onCheckedBoxClick(
+                            newShareTodoItem,
+                            Firebase
+                                .database
+                                .getReference(itemView.context.getString(R.string.root_path_share_todo))
+                        )
                     }
                 }
             }
@@ -38,10 +49,10 @@ class ShareTodoAdapter(private val listener: OnItemClickListener) :
         fun setData(shareTodoItem: ShareTodoItem) {
             binding.apply {
                 tvTitle.text = shareTodoItem.title
-                tvTitle.paint.isStrikeThruText = shareTodoItem.isChecked
+                tvTitle.paint.isStrikeThruText = shareTodoItem.checked
                 tvDescription.text = shareTodoItem.description
                 tvTime.text = shareTodoItem.time
-                checkBox.isChecked = shareTodoItem.isChecked
+                checkBox.isChecked = shareTodoItem.checked
                 tvCreator.text = shareTodoItem.creator
 
                 if (tvDescription.text.isEmpty()) {
@@ -66,7 +77,7 @@ class ShareTodoAdapter(private val listener: OnItemClickListener) :
 
     class ItemComparator : DiffUtil.ItemCallback<ShareTodoItem>() {
         override fun areItemsTheSame(oldItem: ShareTodoItem, newItem: ShareTodoItem): Boolean =
-            oldItem.id == newItem.id
+            oldItem.title == newItem.title
 
         override fun areContentsTheSame(oldItem: ShareTodoItem, newItem: ShareTodoItem): Boolean =
             oldItem == newItem
@@ -74,6 +85,6 @@ class ShareTodoAdapter(private val listener: OnItemClickListener) :
 
     interface OnItemClickListener {
         fun onItemClick(shareTodoItem: ShareTodoItem)
-        fun onCheckedBoxClick(shareTodoItem: ShareTodoItem, isChecked: Boolean)
+        fun onCheckedBoxClick(shareTodoItem: ShareTodoItem, rootPath: DatabaseReference)
     }
 }

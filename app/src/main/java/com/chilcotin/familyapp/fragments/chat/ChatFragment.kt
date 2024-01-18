@@ -26,6 +26,7 @@ class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
     private val adapter by lazy { ChatAdapter() }
+    private val valueEventListener = createValueEventListener()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +39,8 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rootPath = Firebase.database.getReference(getString(R.string.root_path_chat))
         val user = FirebaseAuth.getInstance().currentUser
+        val rootPath = Firebase.database.getReference(getString(R.string.root_path_chat))
 
         initRcView()
         observer(rootPath)
@@ -68,6 +69,9 @@ class ChatFragment : Fragment() {
     }
 
     override fun onDestroy() {
+        val rootPath = Firebase.database.getReference(getString(R.string.root_path_chat))
+        rootPath.removeEventListener(valueEventListener)
+
         super.onDestroy()
         _binding = null
     }
@@ -79,7 +83,11 @@ class ChatFragment : Fragment() {
     }
 
     private fun observer(rootPath: DatabaseReference) {
-        rootPath.addValueEventListener(object : ValueEventListener {
+        rootPath.addValueEventListener(valueEventListener)
+    }
+
+    private fun createValueEventListener(): ValueEventListener {
+        return object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = ArrayList<ChatItem>()
 
@@ -93,6 +101,6 @@ class ChatFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
 }

@@ -8,7 +8,7 @@ import com.chilcotin.familyapp.R
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 
-class Authorization {
+object Authorization {
     private val providers = arrayListOf(
         AuthUI.IdpConfig.GoogleBuilder().build(),
     )

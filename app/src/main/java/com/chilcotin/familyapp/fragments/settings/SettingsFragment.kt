@@ -21,7 +21,7 @@ class SettingsFragment : Fragment() {
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract(),
     ) { res ->
-        Authorization().onSignInResult(res, requireContext())
+        Authorization.onSignInResult(res, requireContext())
         checkAuthState()
     }
 
@@ -40,7 +40,7 @@ class SettingsFragment : Fragment() {
 
         binding.apply {
             btGoogleLogin.setOnClickListener {
-                signInLauncher.launch(Authorization().signInIntent())
+                signInLauncher.launch(Authorization.signInIntent())
             }
             btLogout.setOnClickListener {
                 signOut()

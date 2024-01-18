@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "370bc21268a42d6687f34e6ff0d81e1a",
+    "identityHash": "7c75879b50e742385ccb3581d9d7b404",
     "entities": [
       {
         "tableName": "todo_list",
@@ -30,56 +30,6 @@
             "fieldPath": "isChecked",
             "columnName": "isChecked",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "share_todo_list",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`title` TEXT NOT NULL, `description` TEXT NOT NULL, `time` TEXT NOT NULL, `isChecked` INTEGER NOT NULL, `creator` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "title",
-            "columnName": "title",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "description",
-            "columnName": "description",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "time",
-            "columnName": "time",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isChecked",
-            "columnName": "isChecked",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "creator",
-            "columnName": "creator",
-            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -184,7 +134,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '370bc21268a42d6687f34e6ff0d81e1a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7c75879b50e742385ccb3581d9d7b404')"
     ]
   }
 }
