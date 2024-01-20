@@ -7,8 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.ShopListItemBinding
 import com.chilcotin.familyapp.entities.ShopListItem
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class ShopListAdapter(private val listener: OnItemClickListener) :
     ListAdapter<ShopListItem, ShopListAdapter.ShopListViewHolder>(ItemComparator()) {
@@ -43,7 +47,10 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
                     listener.onItemClick(shopListItem)
                 }
                 ibDelete.setOnClickListener {
-                    listener.deleteItem(shopListItem)
+                    listener.deleteItem(
+                        shopListItem,
+                        Firebase.database.getReference(itemView.context.getString(R.string.root_path_shop_list))
+                    )
                 }
             }
         }
@@ -62,7 +69,7 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
 
     class ItemComparator : DiffUtil.ItemCallback<ShopListItem>() {
         override fun areItemsTheSame(oldItem: ShopListItem, newItem: ShopListItem): Boolean =
-            oldItem.id == newItem.id
+            oldItem.title == newItem.title
 
         override fun areContentsTheSame(oldItem: ShopListItem, newItem: ShopListItem): Boolean =
             oldItem == newItem
@@ -70,6 +77,6 @@ class ShopListAdapter(private val listener: OnItemClickListener) :
 
     interface OnItemClickListener {
         fun onItemClick(shopListItem: ShopListItem)
-        fun deleteItem(shopListItem: ShopListItem)
+        fun deleteItem(shopListItem: ShopListItem, rootPath: DatabaseReference)
     }
 }

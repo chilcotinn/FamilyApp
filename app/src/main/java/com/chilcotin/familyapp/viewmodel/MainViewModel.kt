@@ -87,15 +87,14 @@ class MainViewModel @Inject constructor(
         }
 
 
-    fun getAllShopListItem(): LiveData<List<ShopListItem>> =
-        mainDb.getDao().getAllShopListItem().asLiveData()
+    fun getAllShopListItem() {}
 
-    fun insertShopListItem(item: ShopListItem) = viewModelScope.launch {
-        mainDb.getDao().insertShopListItem(item)
+    fun insertShopListItem(item: ShopListItem, rootPath: DatabaseReference) = viewModelScope.launch {
+        RealtimeDatabase.insertShopListItem(item, rootPath)
     }
 
-    fun deleteShopListItem(item: ShopListItem) = viewModelScope.launch {
-        mainDb.getDao().deleteShopListItem(item)
+    fun deleteShopListItem(item: ShopListItem, rootPath: DatabaseReference) = viewModelScope.launch {
+        RealtimeDatabase.deleteShopListItem(item, rootPath)
     }
 
     fun onShopListItemSelected(item: ShopListItem) = viewModelScope.launch {
@@ -103,29 +102,25 @@ class MainViewModel @Inject constructor(
     }
 
 
-    fun getAllShopItem(listId: Int): LiveData<List<ShopItem>> =
-        mainDb.getDao().getAllShopItem(listId).asLiveData()
+    fun getAllShopItem() {}
 
-    fun insertShopItem(item: ShopItem) = viewModelScope.launch {
-        mainDb.getDao().insertShopItem(item)
+    fun insertShopItem(item: ShopItem, rootPath: DatabaseReference) = viewModelScope.launch {
+        RealtimeDatabase.insertShopItem(item, rootPath)
     }
 
-    fun deleteShopItem(item: ShopItem) = viewModelScope.launch {
-        mainDb.getDao().deleteShopItem(item)
+    fun deleteShopItem(item: ShopItem, rootPath: DatabaseReference) = viewModelScope.launch {
+        RealtimeDatabase.deleteShopItem(item, rootPath)
         itemEventChannel.send(ItemEvent.ShowUndoDeleteShopItemMessage(item))
     }
 
-    fun onShopItemCheckedChanged(item: ShopItem, isChecked: Boolean) = viewModelScope.launch {
-        mainDb.getDao().updateShopItem(item.copy(isChecked = isChecked))
+    fun onShopItemCheckedChanged(item: ShopItem, rootPath: DatabaseReference) = viewModelScope.launch {
+        RealtimeDatabase.insertShopItem(item, rootPath)
     }
 
-    fun onShopItemUndoDeleteClick(item: ShopItem) = viewModelScope.launch {
-        mainDb.getDao().insertShopItem(item)
+    fun onShopItemUndoDeleteClick(item: ShopItem, rootPath: DatabaseReference) = viewModelScope.launch {
+        RealtimeDatabase.insertShopItem(item, rootPath)
     }
 
-    fun deleteShopItemById(listId: Int) = viewModelScope.launch {
-        mainDb.getDao().deleteShopItemById(listId)
-    }
 
     sealed class ItemEvent {
         data class ShowUndoDeleteTodoItemMessage(val todoItem: TodoItem) : ItemEvent()

@@ -6,8 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.chilcotin.familyapp.entities.ShopItem
-import com.chilcotin.familyapp.entities.ShopListItem
 import com.chilcotin.familyapp.entities.TodoItem
 import kotlinx.coroutines.flow.Flow
 
@@ -25,30 +23,4 @@ interface Dao {
 
     @Delete
     suspend fun deleteTodoItem(item: TodoItem)
-
-
-    @Query("SELECT * FROM shop_list_item")
-    fun getAllShopListItem(): Flow<List<ShopListItem>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertShopListItem(item: ShopListItem)
-
-    @Delete
-    suspend fun deleteShopListItem(item: ShopListItem)
-
-
-    @Query("SELECT * FROM shop_list WHERE listId = :listId")
-    fun getAllShopItem(listId: Int): Flow<List<ShopItem>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertShopItem(item: ShopItem)
-
-    @Delete
-    suspend fun deleteShopItem(item: ShopItem)
-
-    @Update
-    suspend fun updateShopItem(item: ShopItem)
-
-    @Query("DELETE FROM shop_list WHERE listId = :listId")
-    suspend fun deleteShopItemById(listId: Int)
 }

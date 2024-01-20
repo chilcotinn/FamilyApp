@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -22,6 +23,12 @@ import com.chilcotin.familyapp.databinding.FragmentShopItemsBinding
 import com.chilcotin.familyapp.entities.ShopItem
 import com.chilcotin.familyapp.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -31,6 +38,7 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
     private val binding get() = _binding!!
     private val adapter by lazy { ShopItemAdapter(this) }
     private val args: ShopItemsFragmentArgs by navArgs()
+    private val postListener = createValueEventListener()
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
@@ -47,16 +55,20 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initRcView()
-        observer()
+        val rootPath = Firebase.database.getReference(getString(R.string.root_path_shop_list))
+            .child(args.shopListTitle)
 
-        val itemTouchHelperCallback = createItemTouchHelper()
+        initRcView()
+        observer(rootPath)
+
+        val itemTouchHelperCallback = createItemTouchHelper(rootPath)
         itemTouchHelperCallback.attachToRecyclerView(binding.rcShopItems)
 
         binding.apply {
             ibOk.setOnClickListener {
                 if (edShopItem.text.isNotEmpty()) {
-                    mainViewModel.insertShopItem(createNewShopItem())
+                    val shopItem = createNewShopItem()
+                    mainViewModel.insertShopItem(shopItem, rootPath)
                     edShopItem.setText("")
                 } else {
                     edShopItem.error = getString(R.string.empty_filed)
@@ -74,7 +86,10 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
                                 getString(R.string.deleted),
                                 Snackbar.LENGTH_LONG
                             ).setAction(getString(R.string.undo)) {
-                                mainViewModel.onShopItemUndoDeleteClick(event.shopItem)
+                                mainViewModel.onShopItemUndoDeleteClick(
+                                    event.shopItem,
+                                    rootPath
+                                )
                             }.show()
                         }
 
@@ -88,6 +103,10 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
     }
 
     override fun onDestroy() {
+        val rootPath = Firebase.database.getReference(getString(R.string.root_path_shop_list))
+            .child(args.shopListTitle)
+        rootPath.removeEventListener(postListener)
+
         super.onDestroy()
         _binding = null
     }
@@ -98,11 +117,10 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
         rcShopItems.setHasFixedSize(true)
     }
 
-    private fun observer() {
+    private fun observer(rootPath: DatabaseReference) {
         lifecycle.coroutineScope.launch {
-            mainViewModel.getAllShopItem(args.shopListItemId).observe(viewLifecycleOwner) {
-                adapter.submitList(it)
-            }
+            rootPath.child(args.shopListTitle).addValueEventListener(postListener)
+            mainViewModel.getAllShopItem()
         }
     }
 
@@ -110,11 +128,29 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
         return ShopItem(
             binding.edShopItem.text.toString(),
             false,
-            args.shopListItemId
+            args.shopListTitle
         )
     }
 
-    private fun createItemTouchHelper(): ItemTouchHelper {
+    private fun createValueEventListener(): ValueEventListener {
+        return object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = ArrayList<ShopItem>()
+
+                for (item in snapshot.children) {
+                    val shopItem = item.getValue(ShopItem::class.java)
+                    if (shopItem != null) list.add(shopItem)
+                }
+                adapter.submitList(list)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun createItemTouchHelper(rootPath: DatabaseReference): ItemTouchHelper {
         return ItemTouchHelper(
             object :
                 ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -129,13 +165,13 @@ class ShopItemsFragment : Fragment(), ShopItemAdapter.OnItemClickListener {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val position = viewHolder.adapterPosition
                     val item = adapter.currentList[position]
-                    mainViewModel.deleteShopItem(item)
+                    mainViewModel.deleteShopItem(item, rootPath)
                 }
             }
         )
     }
 
-    override fun onCheckedBoxClick(shopItem: ShopItem, isChecked: Boolean) {
-        mainViewModel.onShopItemCheckedChanged(shopItem, isChecked)
+    override fun onCheckedBoxClick(shopItem: ShopItem, rootPath: DatabaseReference) {
+        mainViewModel.onShopItemCheckedChanged(shopItem, rootPath)
     }
 }

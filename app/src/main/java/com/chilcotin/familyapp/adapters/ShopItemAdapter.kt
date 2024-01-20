@@ -6,8 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.chilcotin.familyapp.R
 import com.chilcotin.familyapp.databinding.ShopItemBinding
 import com.chilcotin.familyapp.entities.ShopItem
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class ShopItemAdapter(private val listener: OnItemClickListener) :
     ListAdapter<ShopItem, ShopItemAdapter.ShopItemViewHolder>(ItemComparator()) {
@@ -20,8 +24,13 @@ class ShopItemAdapter(private val listener: OnItemClickListener) :
                 checkBox.setOnClickListener {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        val shopItem = getItem(position)
-                        listener.onCheckedBoxClick(shopItem, checkBox.isChecked)
+                        val oldShopItem = getItem(position)
+                        val newShopItem = oldShopItem.copy(checked = !oldShopItem.checked)
+                        listener.onCheckedBoxClick(
+                            newShopItem,
+                            Firebase.database.getReference(itemView.context.getString(R.string.root_path_shop_list))
+                                .child(newShopItem.listTitle)
+                        )
                     }
                 }
             }
@@ -30,8 +39,8 @@ class ShopItemAdapter(private val listener: OnItemClickListener) :
         fun setData(shopItem: ShopItem) {
             binding.apply {
                 tvTitle.text = shopItem.title
-                tvTitle.paint.isStrikeThruText = shopItem.isChecked
-                checkBox.isChecked = shopItem.isChecked
+                tvTitle.paint.isStrikeThruText = shopItem.checked
+                checkBox.isChecked = shopItem.checked
             }
         }
     }
@@ -48,13 +57,13 @@ class ShopItemAdapter(private val listener: OnItemClickListener) :
 
     class ItemComparator : DiffUtil.ItemCallback<ShopItem>() {
         override fun areItemsTheSame(oldItem: ShopItem, newItem: ShopItem): Boolean =
-            oldItem.id == newItem.id
+            oldItem.title == newItem.title
 
         override fun areContentsTheSame(oldItem: ShopItem, newItem: ShopItem): Boolean =
             oldItem == newItem
     }
 
     interface OnItemClickListener {
-        fun onCheckedBoxClick(shopItem: ShopItem, isChecked: Boolean)
+        fun onCheckedBoxClick(shopItem: ShopItem, rootPath: DatabaseReference)
     }
 }

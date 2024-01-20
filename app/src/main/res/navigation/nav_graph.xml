@@ -57,9 +57,6 @@
             app:launchSingleTop="false"
             app:popUpTo="@id/shopItemsFragment"
             app:popUpToInclusive="true" >
-            <argument
-                android:name="shopListItemId"
-                android:defaultValue="0" />
         </action>
     </fragment>
     <fragment
@@ -143,7 +140,7 @@
             app:popUpTo="@id/shopListFragment"
             app:popUpToInclusive="true" />
         <argument
-            android:name="shopListItemId"
-            app:argType="integer" />
+            android:name="shopListTitle"
+            app:argType="string" />
     </fragment>
 </navigation>

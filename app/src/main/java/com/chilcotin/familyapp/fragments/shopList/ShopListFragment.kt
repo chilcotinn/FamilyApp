@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -23,6 +24,12 @@ import com.chilcotin.familyapp.databinding.FragmentShopListBinding
 import com.chilcotin.familyapp.entities.ShopListItem
 import com.chilcotin.familyapp.utils.Const
 import com.chilcotin.familyapp.viewmodel.MainViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -31,6 +38,7 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
     private var _binding: FragmentShopListBinding? = null
     private val binding get() = _binding!!
     private val adapter by lazy { ShopListAdapter(this) }
+    private val postListener = createValueEventListener()
 
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModel.MainViewModelFactory((context?.applicationContext as App).database)
@@ -38,6 +46,8 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val rootPath = Firebase.database.getReference(getString(R.string.root_path_shop_list))
 
         setFragmentResultListener(Const.NEW_SHOP_LIST_ITEM_REQUEST) { _, bundle ->
             val result: ShopListItem = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -48,7 +58,7 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
                 bundle.getParcelable(Const.NEW_SHOP_LIST_ITEM)
                     ?: ShopListItem(getString(R.string.error))
             }
-            mainViewModel.insertShopListItem(result)
+            mainViewModel.insertShopListItem(result, rootPath)
         }
     }
 
@@ -63,8 +73,10 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val rootPath = Firebase.database.getReference(getString(R.string.root_path_shop_list))
+
         initRcView()
-        observer()
+        observer(rootPath)
 
         binding.fbAddShopList.setOnClickListener {
             findNavController().navigate(R.id.action_shopListFragment_to_newShopListItemFragment)
@@ -77,7 +89,7 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
                         is MainViewModel.ItemEvent.NavigateToShopItemsScreen -> {
                             val action =
                                 ShopListFragmentDirections.actionShopListFragmentToShopItemsFragment(
-                                    event.shopListItem.id
+                                    event.shopListItem.title
                                 )
                             findNavController().navigate(action)
                         }
@@ -92,6 +104,9 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
     }
 
     override fun onDestroy() {
+        val rootPath = Firebase.database.getReference(getString(R.string.root_path_shop_list))
+        rootPath.removeEventListener(postListener)
+
         super.onDestroy()
         _binding = null
     }
@@ -102,22 +117,20 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
         rcShopListItem.setHasFixedSize(true)
     }
 
-    private fun observer() {
+    private fun observer(rootPath: DatabaseReference) {
         lifecycle.coroutineScope.launch {
-            mainViewModel.getAllShopListItem().observe(viewLifecycleOwner) {
-                adapter.submitList(it)
-            }
+            rootPath.addValueEventListener(postListener)
+            mainViewModel.getAllShopListItem()
         }
     }
 
-    private fun deleteAlertDialog(item: ShopListItem) {
+    private fun deleteAlertDialog(item: ShopListItem, rootPath: DatabaseReference) {
         val builder = AlertDialog.Builder(requireContext())
         val dialog = builder.create()
         dialog.setTitle(R.string.delete)
 
         dialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok)) { _, _ ->
-            mainViewModel.deleteShopListItem(item)
-            mainViewModel.deleteShopItemById(item.id)
+            mainViewModel.deleteShopListItem(item, rootPath)
             dialog.dismiss()
         }
         dialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel)) { _, _ ->
@@ -126,11 +139,29 @@ class ShopListFragment : Fragment(), ShopListAdapter.OnItemClickListener {
         dialog.show()
     }
 
+    private fun createValueEventListener(): ValueEventListener {
+        return object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val list = ArrayList<ShopListItem>()
+
+                for (item in snapshot.children) {
+                    val shopListItem = item.getValue(ShopListItem::class.java)
+                    if (shopListItem != null) list.add(shopListItem)
+                }
+                adapter.submitList(list)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     override fun onItemClick(shopListItem: ShopListItem) {
         mainViewModel.onShopListItemSelected(shopListItem)
     }
 
-    override fun deleteItem(shopListItem: ShopListItem) {
-        deleteAlertDialog(shopListItem)
+    override fun deleteItem(shopListItem: ShopListItem, rootPath: DatabaseReference) {
+        deleteAlertDialog(shopListItem, rootPath)
     }
 }
