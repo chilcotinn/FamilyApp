@@ -37,3 +37,5 @@ Application:
   unavailable. Messages are not stored in the local database.
 
 - Fifth screen - Settings screen.
+
+![Image](https://github.com/chilcotinn/Temp/blob/master/Screenshot.png)
