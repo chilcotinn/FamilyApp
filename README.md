@@ -1,7 +1,5 @@
 # FamilyApp
 
-Telegram: https://t.me/chilcotin
-
 MinSdk 23
 
 Include:
