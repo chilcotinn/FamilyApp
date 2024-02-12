@@ -62,8 +62,13 @@ class ChatFragment : Fragment() {
                         edMessage.error = getString(R.string.empty_filed)
                     }
                 }
+                ibDelete.setOnClickListener {
+                    rootPath.child(user.displayName ?: "Error")
+                        .removeValue()
+                }
             } else {
                 ibOk.isClickable = false
+                ibDelete.isClickable = false
             }
         }
     }

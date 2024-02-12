@@ -42,6 +42,18 @@
         android:contentDescription="@string/ok"
         android:src="@drawable/ic_ok"
         app:layout_constraintBottom_toBottomOf="@+id/edMessage"
+        app:layout_constraintEnd_toStartOf="@+id/ibDelete"
+        app:layout_constraintTop_toTopOf="@+id/edMessage"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/ibDelete"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:backgroundTint="@color/rippleBottomBar"
+        android:contentDescription="@string/ok"
+        android:src="@drawable/ic_delete_white"
+        app:layout_constraintBottom_toBottomOf="@+id/edMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/edMessage" />
 </androidx.constraintlayout.widget.ConstraintLayout>
