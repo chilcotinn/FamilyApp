@@ -89,13 +89,15 @@ class MainViewModel @Inject constructor(
 
     fun getAllShopListItem() {}
 
-    fun insertShopListItem(item: ShopListItem, rootPath: DatabaseReference) = viewModelScope.launch {
-        RealtimeDatabase.insertShopListItem(item, rootPath)
-    }
+    fun insertShopListItem(item: ShopListItem, rootPath: DatabaseReference) =
+        viewModelScope.launch {
+            RealtimeDatabase.insertShopListItem(item, rootPath)
+        }
 
-    fun deleteShopListItem(item: ShopListItem, rootPath: DatabaseReference) = viewModelScope.launch {
-        RealtimeDatabase.deleteShopListItem(item, rootPath)
-    }
+    fun deleteShopListItem(item: ShopListItem, rootPath: DatabaseReference) =
+        viewModelScope.launch {
+            RealtimeDatabase.deleteShopListItem(item, rootPath)
+        }
 
     fun onShopListItemSelected(item: ShopListItem) = viewModelScope.launch {
         itemEventChannel.send(ItemEvent.NavigateToShopItemsScreen(item))
@@ -113,13 +115,15 @@ class MainViewModel @Inject constructor(
         itemEventChannel.send(ItemEvent.ShowUndoDeleteShopItemMessage(item))
     }
 
-    fun onShopItemCheckedChanged(item: ShopItem, rootPath: DatabaseReference) = viewModelScope.launch {
-        RealtimeDatabase.insertShopItem(item, rootPath)
-    }
+    fun onShopItemCheckedChanged(item: ShopItem, rootPath: DatabaseReference) =
+        viewModelScope.launch {
+            RealtimeDatabase.insertShopItem(item, rootPath)
+        }
 
-    fun onShopItemUndoDeleteClick(item: ShopItem, rootPath: DatabaseReference) = viewModelScope.launch {
-        RealtimeDatabase.insertShopItem(item, rootPath)
-    }
+    fun onShopItemUndoDeleteClick(item: ShopItem, rootPath: DatabaseReference) =
+        viewModelScope.launch {
+            RealtimeDatabase.insertShopItem(item, rootPath)
+        }
 
 
     sealed class ItemEvent {
