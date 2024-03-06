@@ -57,7 +57,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48.1")
     ksp("com.google.dagger:hilt-android-compiler:2.48.1")
 
-    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-crashlytics")
@@ -65,7 +65,7 @@ dependencies {
 
     implementation("com.firebaseui:firebase-ui-auth:8.0.2")
 
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
